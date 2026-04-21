@@ -206,7 +206,7 @@
   .stagger.in > *:nth-child(10) { transition-delay: 0.50s; }
   .stagger.in > * { opacity: 1; transform: none; }
 
-  /* Callout — border only, no sweep shimmer */
+  /* Callout */
   .callout-inner {
     border: 1px solid oklch(56% 0.215 28 / 35%);
     background: oklch(56% 0.215 28 / 4%);
@@ -242,24 +242,120 @@
   .status-upcoming { font-family: var(--body); font-size: 10px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-dim); opacity: 0.4; }
   @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
 
+  /* Championship picture */
+  .champ-picture {
+    border: 1px solid oklch(56% 0.215 28 / 35%);
+    background: oklch(56% 0.215 28 / 4%);
+    margin-bottom: 28px;
+  }
+  .champ-head {
+    font-family: var(--body);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    padding: 12px 20px;
+    border-bottom: 1px solid oklch(56% 0.215 28 / 20%);
+  }
+  .champ-battle {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+  }
+  .champ-side { padding: 24px 22px; }
+  .champ-side.chasing-side { text-align: right; }
+  .champ-status {
+    font-family: var(--body);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink-dim);
+    margin-bottom: 4px;
+  }
+  .leader-side .champ-status { color: var(--accent); }
+  .champ-name {
+    font-family: var(--display);
+    font-size: clamp(18px, 2.8vw, 28px);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    margin-bottom: 6px;
+  }
+  .leader-side .champ-name { color: var(--accent); }
+  .champ-score {
+    font-family: var(--mono);
+    font-size: clamp(32px, 5vw, 48px);
+    letter-spacing: -0.02em;
+    line-height: 1;
+  }
+  .champ-middle {
+    padding: 24px 32px;
+    border-left: 1px solid oklch(56% 0.215 28 / 20%);
+    border-right: 1px solid oklch(56% 0.215 28 / 20%);
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  .champ-margin {
+    font-family: var(--display);
+    font-size: clamp(52px, 8vw, 88px);
+    line-height: 1;
+    color: var(--accent);
+  }
+  .champ-margin-label {
+    font-family: var(--body);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--ink-dim);
+    margin-top: 2px;
+  }
+  .champ-facts {
+    border-top: 1px solid oklch(56% 0.215 28 / 20%);
+    padding: 14px 20px;
+    display: flex;
+    gap: 40px;
+    flex-wrap: wrap;
+  }
+  .champ-fact { font-family: var(--body); font-size: 13px; color: var(--ink-dim); }
+  .champ-fact strong { color: var(--ink); font-weight: 700; }
+
   /* Standings */
   .standings-wrap { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--line); border: 1px solid var(--line); }
   .standings-col { background: var(--bg); }
-  .standings-col-header { padding: 12px 16px; border-bottom: 1px solid var(--line); font-family: var(--body); font-size: 10px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-dim); display: flex; justify-content: space-between; align-items: center; }
+  .standings-col-header {
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--line);
+    font-family: var(--body);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ink-dim);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
   .updated-note { font-family: var(--body); font-size: 9px; font-weight: 400; letter-spacing: 0.1em; color: oklch(64% 0.005 75 / 45%); }
-  .standings-row { display: flex; align-items: center; padding: 10px 16px; border-bottom: 1px solid var(--line); gap: 12px; }
+  .avg-col-label { font-family: var(--body); font-size: 9px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-dim); opacity: 0.5; }
+  .standings-header-right { display: flex; gap: 10px; align-items: center; }
+  .standings-row { display: flex; align-items: center; padding: 10px 16px; border-bottom: 1px solid var(--line); gap: 10px; }
   .standings-row:last-child { border-bottom: none; }
   .standings-row.leader { background: oklch(56% 0.215 28 / 4%); }
   .standings-rank { font-family: var(--mono); font-size: 12px; color: var(--ink-dim); width: 20px; text-align: right; flex-shrink: 0; }
   .standings-rank.podium { color: var(--accent); font-weight: 700; }
   .standings-name { font-family: var(--body); font-size: 14px; color: var(--ink); flex: 1; font-weight: 500; }
   .standings-row.leader .standings-name { color: var(--accent); }
+  .standings-avg { font-family: var(--mono); font-size: 11px; color: var(--ink-dim); flex-shrink: 0; letter-spacing: 0.02em; opacity: 0.6; min-width: 30px; text-align: right; }
   .standings-pts { font-family: var(--mono); font-size: 13px; color: var(--ink-dim); flex-shrink: 0; }
   .standings-pts strong { color: var(--ink); }
 
-  /* Teams — CSS counter watermark, no side stripe */
+  /* Teams */
   .teams-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1px; background: var(--line); border: 1px solid var(--line); counter-reset: team; }
-  .team-card { background: var(--bg-2); padding: 28px 24px; position: relative; overflow: hidden; counter-increment: team; }
+  .team-card { background: var(--bg-2); padding: 24px 22px; position: relative; overflow: hidden; counter-increment: team; }
   .team-card::after {
     content: "P" counter(team);
     font-family: var(--display);
@@ -273,12 +369,192 @@
     z-index: 0;
   }
   .team-card.leader::after { color: oklch(56% 0.215 28 / 14%); }
-  .team-name, .team-drivers, .team-pts { position: relative; z-index: 1; }
-  .team-name { font-family: var(--display); font-size: 20px; text-transform: uppercase; letter-spacing: 0.04em; color: var(--ink); margin-bottom: 14px; line-height: 1; }
+  .team-name, .team-split, .team-pts { position: relative; z-index: 1; }
+  .team-name { font-family: var(--display); font-size: 20px; text-transform: uppercase; letter-spacing: 0.04em; color: var(--ink); margin-bottom: 16px; line-height: 1; }
   .team-card.leader .team-name { color: var(--accent); }
-  .team-drivers { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 10px; }
-  .team-driver { font-family: var(--body); font-size: 11px; font-weight: 600; letter-spacing: 0.1em; padding: 4px 10px; border: 1px solid var(--line); color: var(--ink-dim); text-transform: uppercase; }
-  .team-pts { font-family: var(--mono); font-size: 12px; color: var(--ink-dim); letter-spacing: 0.05em; }
+  .team-pts { font-family: var(--mono); font-size: 11px; color: var(--ink-dim); letter-spacing: 0.05em; margin-top: 10px; }
+
+  /* Team contribution split */
+  .team-split { margin-bottom: 4px; }
+  .split-row { display: flex; justify-content: space-between; align-items: center; padding: 3px 0; }
+  .team-driver { font-family: var(--body); font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-dim); }
+  .split-pts { font-family: var(--mono); font-size: 12px; color: var(--ink-dim); letter-spacing: 0.04em; }
+  .split-track { height: 2px; background: var(--line); margin: 8px 0; position: relative; }
+  .split-fill { position: absolute; left: 0; top: 0; height: 100%; background: var(--accent); }
+
+  /* Round by Round */
+  .chart-wrap {
+    border: 1px solid var(--line);
+    background: var(--bg-2);
+    padding: 20px 16px 12px;
+    margin-bottom: 32px;
+  }
+  .chart-label {
+    font-family: var(--body);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ink-dim);
+    margin-bottom: 12px;
+  }
+  .chart-legend {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    align-items: center;
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px solid var(--line);
+  }
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--body);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-dim);
+  }
+  .legend-line {
+    width: 20px;
+    height: 2px;
+    flex-shrink: 0;
+  }
+  .legend-note {
+    font-family: var(--body);
+    font-size: 10px;
+    font-style: italic;
+    color: oklch(64% 0.005 75 / 50%);
+    margin-left: auto;
+  }
+  .sub-head {
+    font-family: var(--body);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ink-dim);
+    margin-bottom: 16px;
+  }
+  .moment-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1px;
+    background: var(--line);
+    border: 1px solid var(--line);
+    margin-bottom: 32px;
+  }
+  .moment-card {
+    background: var(--bg-2);
+    padding: 26px 24px;
+    position: relative;
+    overflow: hidden;
+  }
+  .moment-round-bg {
+    position: absolute;
+    top: 8px;
+    right: 14px;
+    font-family: var(--display);
+    font-size: 64px;
+    letter-spacing: -0.02em;
+    line-height: 1;
+    color: var(--line);
+    pointer-events: none;
+    z-index: 0;
+    user-select: none;
+  }
+  .moment-content { position: relative; z-index: 1; }
+  .moment-tag {
+    font-family: var(--body);
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 6px;
+  }
+  .moment-title {
+    font-family: var(--display);
+    font-size: clamp(17px, 2vw, 22px);
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    margin-bottom: 8px;
+    line-height: 1.05;
+  }
+  .moment-stat {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--accent-2);
+    letter-spacing: 0.06em;
+    margin-bottom: 10px;
+  }
+  .moment-desc {
+    font-family: var(--body);
+    font-size: 13px;
+    color: var(--ink-dim);
+    line-height: 1.65;
+    max-width: 32ch;
+  }
+  .rounds-table {
+    width: 100%;
+    border-collapse: collapse;
+    border: 1px solid var(--line);
+    font-size: 13px;
+  }
+  .rounds-table th {
+    font-family: var(--body);
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink-dim);
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--line);
+    text-align: center;
+    background: var(--bg);
+  }
+  .rounds-table th:first-child { text-align: left; }
+  .rounds-table td {
+    font-family: var(--mono);
+    font-size: 13px;
+    padding: 11px 12px;
+    border-bottom: 1px solid var(--line);
+    text-align: center;
+    color: var(--ink-dim);
+  }
+  .rounds-table tr:last-child td { border-bottom: none; }
+  .rounds-table .team-col {
+    font-family: var(--body);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink);
+    text-align: left;
+  }
+  .rounds-table .rt-win { color: var(--accent-2); font-weight: 700; }
+  .rounds-table .rt-crisis { color: var(--accent); font-weight: 700; }
+  .rounds-table .rt-total { color: var(--ink); font-weight: 700; }
+  .rounds-table .winner-row td {
+    background: oklch(86% 0.175 97 / 5%);
+    font-family: var(--body);
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-dim);
+  }
+  .rounds-note {
+    font-family: var(--body);
+    font-size: 11px;
+    color: oklch(64% 0.005 75 / 45%);
+    margin-top: 10px;
+    letter-spacing: 0.02em;
+    line-height: 1.6;
+  }
 
   /* Settings */
   .settings-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1px; background: var(--line); border: 1px solid var(--line); margin-bottom: 24px; }
@@ -309,6 +585,19 @@
     .callout-inner { padding: 24px 20px; }
     .schedule-table { font-size: 12px; }
     .schedule-table td, .schedule-table th { padding: 10px 10px; }
+    .champ-battle { grid-template-columns: 1fr; }
+    .champ-middle {
+      border-left: none; border-right: none;
+      border-top: 1px solid oklch(56% 0.215 28 / 20%);
+      border-bottom: 1px solid oklch(56% 0.215 28 / 20%);
+    }
+    .champ-side.chasing-side { text-align: left; }
+    .standings-avg { display: none; }
+    .avg-col-label { display: none; }
+    .moment-grid { grid-template-columns: 1fr; }
+    .legend-note { display: none; }
+    .rounds-table { font-size: 11px; }
+    .rounds-table td, .rounds-table th { padding: 8px 8px; }
   }
   @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
@@ -437,27 +726,245 @@
   <section>
     <div class="section-head reveal">
       <div class="section-num">04</div>
+      <h2>Round by Round</h2>
+    </div>
+
+    <div class="chart-wrap reveal">
+      <div class="chart-label">Championship Trajectory · Top 4 Teams · Cumulative Points</div>
+      <svg width="100%" viewBox="0 0 860 225" xmlns="http://www.w3.org/2000/svg" style="display:block;overflow:visible">
+        <!-- Horizontal grid lines -->
+        <line x1="45" y1="148" x2="820" y2="148" style="stroke:var(--line)" stroke-width="0.5" stroke-dasharray="4,6"/>
+        <line x1="45" y1="110" x2="820" y2="110" style="stroke:var(--line)" stroke-width="0.5" stroke-dasharray="4,6"/>
+        <line x1="45" y1="73"  x2="820" y2="73"  style="stroke:var(--line)" stroke-width="0.5" stroke-dasharray="4,6"/>
+        <line x1="45" y1="35"  x2="820" y2="35"  style="stroke:var(--line)" stroke-width="0.5" stroke-dasharray="4,6"/>
+        <line x1="45" y1="185" x2="820" y2="185" style="stroke:var(--line)" stroke-width="1"/>
+        <!-- Y-axis labels -->
+        <text x="38" y="152" text-anchor="end" style="font-family:'Azeret Mono',monospace;font-size:9px;fill:var(--ink-dim)">50</text>
+        <text x="38" y="114" text-anchor="end" style="font-family:'Azeret Mono',monospace;font-size:9px;fill:var(--ink-dim)">100</text>
+        <text x="38" y="77"  text-anchor="end" style="font-family:'Azeret Mono',monospace;font-size:9px;fill:var(--ink-dim)">150</text>
+        <text x="38" y="39"  text-anchor="end" style="font-family:'Azeret Mono',monospace;font-size:9px;fill:var(--ink-dim)">200</text>
+        <!-- X-axis round labels -->
+        <text x="60"  y="205" text-anchor="middle" style="font-family:'Azeret Mono',monospace;font-size:10px;fill:var(--ink-dim)">R1</text>
+        <text x="163" y="205" text-anchor="middle" style="font-family:'Azeret Mono',monospace;font-size:10px;fill:var(--ink-dim)">R2</text>
+        <text x="266" y="205" text-anchor="middle" style="font-family:'Azeret Mono',monospace;font-size:10px;fill:var(--ink-dim)">R3</text>
+        <text x="369" y="205" text-anchor="middle" style="font-family:'Azeret Mono',monospace;font-size:10px;fill:var(--ink-dim)">R4</text>
+        <text x="471" y="205" text-anchor="middle" style="font-family:'Azeret Mono',monospace;font-size:10px;fill:var(--ink-dim)">R5</text>
+        <text x="574" y="205" text-anchor="middle" style="font-family:'Azeret Mono',monospace;font-size:10px;fill:var(--ink-dim)">R6</text>
+        <text x="677" y="205" text-anchor="middle" style="font-family:'Azeret Mono',monospace;font-size:10px;fill:var(--ink-dim)">R7</text>
+        <text x="780" y="205" text-anchor="middle" style="font-family:'Azeret Mono',monospace;font-size:10px;fill:var(--ink-dim)">R8</text>
+        <!-- Lead change markers (yellow dashed verticals) -->
+        <line x1="471" y1="20" x2="471" y2="185" style="stroke:oklch(86% 0.175 97 / 25%)" stroke-width="1" stroke-dasharray="3,5"/>
+        <line x1="574" y1="20" x2="574" y2="185" style="stroke:oklch(86% 0.175 97 / 25%)" stroke-width="1" stroke-dasharray="3,5"/>
+        <line x1="677" y1="20" x2="677" y2="185" style="stroke:oklch(86% 0.175 97 / 25%)" stroke-width="1" stroke-dasharray="3,5"/>
+        <!-- Lead change labels -->
+        <text x="471" y="17" text-anchor="middle" style="font-family:'Archivo',sans-serif;font-size:7px;fill:oklch(86% 0.175 97 / 55%);letter-spacing:0.08em">SS LEADS</text>
+        <text x="574" y="17" text-anchor="middle" style="font-family:'Archivo',sans-serif;font-size:7px;fill:oklch(86% 0.175 97 / 55%);letter-spacing:0.08em">BZ LEADS</text>
+        <text x="677" y="17" text-anchor="middle" style="font-family:'Archivo',sans-serif;font-size:7px;fill:oklch(86% 0.175 97 / 55%);letter-spacing:0.08em">SS LEADS</text>
+        <!-- BP (dimmest): 60,170 163,151 266,122 369,117 471,96 574,81 677,67 780,61 -->
+        <polyline points="60,170 163,151 266,122 369,117 471,96 574,81 677,67 780,61"
+          style="fill:none;stroke:oklch(48% 0.004 75)" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/>
+        <circle cx="60"  cy="170" r="2.5" style="fill:oklch(48% 0.004 75)"/>
+        <circle cx="163" cy="151" r="2.5" style="fill:oklch(48% 0.004 75)"/>
+        <circle cx="266" cy="122" r="2.5" style="fill:oklch(48% 0.004 75)"/>
+        <circle cx="369" cy="117" r="2.5" style="fill:oklch(48% 0.004 75)"/>
+        <circle cx="471" cy="96"  r="2.5" style="fill:oklch(48% 0.004 75)"/>
+        <circle cx="574" cy="81"  r="2.5" style="fill:oklch(48% 0.004 75)"/>
+        <circle cx="677" cy="67"  r="2.5" style="fill:oklch(48% 0.004 75)"/>
+        <circle cx="780" cy="61"  r="2.5" style="fill:oklch(48% 0.004 75)"/>
+        <!-- DC: 60,170 163,157 266,138 369,124 471,112 574,97 677,79 780,53 -->
+        <polyline points="60,170 163,157 266,138 369,124 471,112 574,97 677,79 780,53"
+          style="fill:none;stroke:var(--ink-dim)" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/>
+        <circle cx="60"  cy="170" r="2.5" style="fill:var(--ink-dim)"/>
+        <circle cx="163" cy="157" r="2.5" style="fill:var(--ink-dim)"/>
+        <circle cx="266" cy="138" r="2.5" style="fill:var(--ink-dim)"/>
+        <circle cx="369" cy="124" r="2.5" style="fill:var(--ink-dim)"/>
+        <circle cx="471" cy="112" r="2.5" style="fill:var(--ink-dim)"/>
+        <circle cx="574" cy="97"  r="2.5" style="fill:var(--ink-dim)"/>
+        <circle cx="677" cy="79"  r="2.5" style="fill:var(--ink-dim)"/>
+        <circle cx="780" cy="53"  r="2.5" style="fill:var(--ink-dim)"/>
+        <!-- BZ: 60,163 163,139 266,126 369,100 471,94 574,68 677,58 780,34 -->
+        <polyline points="60,163 163,139 266,126 369,100 471,94 574,68 677,58 780,34"
+          style="fill:none;stroke:oklch(82% 0.003 75)" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
+        <circle cx="60"  cy="163" r="3.5" style="fill:oklch(82% 0.003 75)"/>
+        <circle cx="163" cy="139" r="3.5" style="fill:oklch(82% 0.003 75)"/>
+        <circle cx="266" cy="126" r="3.5" style="fill:oklch(82% 0.003 75)"/>
+        <circle cx="369" cy="100" r="3.5" style="fill:oklch(82% 0.003 75)"/>
+        <!-- BZ R5 crisis dot: red ring to mark the flat stretch -->
+        <circle cx="471" cy="94"  r="5"   style="fill:none;stroke:var(--accent)" stroke-width="1.5"/>
+        <circle cx="471" cy="94"  r="3"   style="fill:oklch(82% 0.003 75)"/>
+        <circle cx="574" cy="68"  r="3.5" style="fill:oklch(82% 0.003 75)"/>
+        <circle cx="677" cy="58"  r="3.5" style="fill:oklch(82% 0.003 75)"/>
+        <circle cx="780" cy="34"  r="3.5" style="fill:oklch(82% 0.003 75)"/>
+        <!-- SS (accent/red, on top): 60,166 163,144 266,131 369,110 471,92 574,73 677,55 780,33 -->
+        <polyline points="60,166 163,144 266,131 369,110 471,92 574,73 677,55 780,33"
+          style="fill:none;stroke:var(--accent)" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
+        <circle cx="60"  cy="166" r="3.5" style="fill:var(--accent)"/>
+        <circle cx="163" cy="144" r="3.5" style="fill:var(--accent)"/>
+        <circle cx="266" cy="131" r="3.5" style="fill:var(--accent)"/>
+        <circle cx="369" cy="110" r="3.5" style="fill:var(--accent)"/>
+        <circle cx="471" cy="92"  r="3.5" style="fill:var(--accent)"/>
+        <circle cx="574" cy="73"  r="3.5" style="fill:var(--accent)"/>
+        <circle cx="677" cy="55"  r="3.5" style="fill:var(--accent)"/>
+        <circle cx="780" cy="33"  r="3.5" style="fill:var(--accent)"/>
+        <!-- End labels -->
+        <text x="790" y="30"  style="font-family:'Archivo',sans-serif;font-size:9px;font-weight:700;fill:var(--accent)">SS</text>
+        <text x="790" y="41"  style="font-family:'Azeret Mono',monospace;font-size:8px;fill:oklch(56% 0.215 28 / 65%)">203</text>
+        <text x="790" y="55"  style="font-family:'Archivo',sans-serif;font-size:9px;font-weight:700;fill:oklch(82% 0.003 75)">BZ</text>
+        <text x="790" y="66"  style="font-family:'Azeret Mono',monospace;font-size:8px;fill:oklch(82% 0.003 75 / 65%)">202</text>
+      </svg>
+      <div class="chart-legend">
+        <div class="legend-item"><span class="legend-line" style="background:var(--accent)"></span>Sully-Sully (203)</div>
+        <div class="legend-item"><span class="legend-line" style="background:oklch(82% 0.003 75)"></span>Boltus-Zerpa (202)</div>
+        <div class="legend-item"><span class="legend-line" style="background:var(--ink-dim)"></span>Dark-Ctill (176)</div>
+        <div class="legend-item"><span class="legend-line" style="background:oklch(48% 0.004 75)"></span>Barry-Pawl (166)</div>
+        <div class="legend-note">dashed = championship lead changed · ○ = crisis round</div>
+      </div>
+    </div>
+
+    <div class="sub-head reveal">Key Moments</div>
+    <div class="moment-grid stagger">
+      <div class="moment-card">
+        <span class="moment-round-bg">R5</span>
+        <div class="moment-content">
+          <div class="moment-tag">Crisis</div>
+          <div class="moment-title">The BZ Collapse</div>
+          <div class="moment-stat">8 pts · BZ's worst round by 10 pts</div>
+          <div class="moment-desc">Zerpa suffered an ABS malfunction at Deep Forest Reverse. Boltus-Zerpa's 8-point haul was their flattest stretch all season. Sully-Sully led the championship for the first time after trailing for four straight rounds.</div>
+        </div>
+      </div>
+      <div class="moment-card">
+        <span class="moment-round-bg">R3</span>
+        <div class="moment-content">
+          <div class="moment-tag">Masterclass</div>
+          <div class="moment-title">Barry-Pawl's Best</div>
+          <div class="moment-stat">39 pts · season high, any team, any round</div>
+          <div class="moment-desc">Dragon Trail Gardens saw Barry and Pawl post the highest combined score of the entire season. They'd follow it with a 7-point disaster the very next week — the most dramatic boom-and-bust arc of S3.</div>
+        </div>
+      </div>
+      <div class="moment-card">
+        <span class="moment-round-bg">0</span>
+        <div class="moment-content">
+          <div class="moment-tag">Consistency</div>
+          <div class="moment-title">Zero Round Wins</div>
+          <div class="moment-stat">0 round wins · 8 rounds · 203 pts</div>
+          <div class="moment-desc">Team Sully-Sully never won a single round. Their worst was 17 pts. Their best was 29. Every other race: 24–28 like clockwork. They lead the championship without ever topping a weekly leaderboard.</div>
+        </div>
+      </div>
+      <div class="moment-card">
+        <span class="moment-round-bg">6</span>
+        <div class="moment-content">
+          <div class="moment-tag">Ghost Laps</div>
+          <div class="moment-title">Zerpa's Starts</div>
+          <div class="moment-stat">19.2 pts/start · 2 races missed</div>
+          <div class="moment-desc">A. Zerpa started only 6 of 8 rounds yet sits 4th individually with 115 pts. At 19.2 pts per start, a full 8-race campaign projects to 153+ pts — enough to have put Boltus-Zerpa comfortably clear.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sub-head reveal">Team Scores by Round · Top 4</div>
+    <div class="reveal">
+      <table class="rounds-table">
+        <thead>
+          <tr>
+            <th>Team</th>
+            <th>R1</th><th>R2</th><th>R3</th><th>R4</th>
+            <th>R5</th><th>R6</th><th>R7</th><th>R8</th>
+            <th>Total</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="winner-row">
+            <td>Round Winner</td>
+            <td>BZ</td><td>BZ</td><td>BP</td><td>BZ</td>
+            <td>PJ†</td><td>BZ</td><td>PJ†</td><td>DC</td>
+            <td>—</td>
+          </tr>
+          <tr>
+            <td class="team-col">Sully-Sully</td>
+            <td>26</td><td>29</td><td>17</td><td>28</td>
+            <td>24</td><td>26</td><td>24</td><td>29</td>
+            <td class="rt-total">203</td>
+          </tr>
+          <tr>
+            <td class="team-col">Boltus-Zerpa</td>
+            <td class="rt-win">30</td><td class="rt-win">31</td><td>18</td><td class="rt-win">34</td>
+            <td class="rt-crisis">8</td><td class="rt-win">35</td><td>14</td><td>32</td>
+            <td class="rt-total">202</td>
+          </tr>
+          <tr>
+            <td class="team-col">Dark-Ctill</td>
+            <td>20</td><td>18</td><td>25</td><td>18</td>
+            <td>16</td><td>20</td><td>24</td><td class="rt-win">35</td>
+            <td class="rt-total">176</td>
+          </tr>
+          <tr>
+            <td class="team-col">Barry-Pawl</td>
+            <td>20</td><td>25</td><td class="rt-win">39</td><td>7</td>
+            <td>28</td><td>20</td><td>18</td><td>9</td>
+            <td class="rt-total">166</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="rounds-note">† Peekaboo-Jett won R5 and R7 overall (not in top-4 comparison). Yellow = round winner among shown teams. Red = BZ crisis round.</div>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-head reveal">
+      <div class="section-num">05</div>
       <h2>Championship Standings</h2>
     </div>
+
+    <!-- Championship picture -->
+    <div class="champ-picture reveal">
+      <div class="champ-head">Championship Battle · 2 Races Remaining</div>
+      <div class="champ-battle">
+        <div class="champ-side leader-side">
+          <div class="champ-status">Leading</div>
+          <div class="champ-name">Sully-Sully</div>
+          <div class="champ-score">203</div>
+        </div>
+        <div class="champ-middle">
+          <div class="champ-margin">1</div>
+          <div class="champ-margin-label">point</div>
+        </div>
+        <div class="champ-side chasing-side">
+          <div class="champ-status">Chasing</div>
+          <div class="champ-name">Boltus-Zerpa</div>
+          <div class="champ-score">202</div>
+        </div>
+      </div>
+      <div class="champ-facts">
+        <div class="champ-fact"><strong>100 pts</strong> still on the table — 2 races × 50 max per team</div>
+        <div class="champ-fact"><strong>+2 pts</strong> net — what Boltus-Zerpa need to outscore Sully-Sully to take the title</div>
+      </div>
+    </div>
+
     <div class="standings-wrap reveal">
       <div class="standings-col">
-        <div class="standings-col-header"><span>Individual Drivers</span><span class="updated-note">After R8</span></div>
-        <div class="standings-row leader"><span class="standings-rank podium">1</span><span class="standings-name">Sully</span><span class="standings-pts"><strong>168</strong></span></div>
-        <div class="standings-row"><span class="standings-rank podium">2</span><span class="standings-name">Dark Delacroix</span><span class="standings-pts"><strong>130</strong></span></div>
-        <div class="standings-row"><span class="standings-rank podium">3</span><span class="standings-name">Barry</span><span class="standings-pts"><strong>121</strong></span></div>
-        <div class="standings-row"><span class="standings-rank">4</span><span class="standings-name">A. Zerpa</span><span class="standings-pts"><strong>115</strong></span></div>
-        <div class="standings-row"><span class="standings-rank">5</span><span class="standings-name">PunkTree</span><span class="standings-pts"><strong>89</strong></span></div>
-        <div class="standings-row"><span class="standings-rank">6</span><span class="standings-name">Jett</span><span class="standings-pts"><strong>88</strong></span></div>
-        <div class="standings-row"><span class="standings-rank">7</span><span class="standings-name">Boltus</span><span class="standings-pts"><strong>87</strong></span></div>
-        <div class="standings-row"><span class="standings-rank">8</span><span class="standings-name">TVDV</span><span class="standings-pts"><strong>72</strong></span></div>
-        <div class="standings-row"><span class="standings-rank">9</span><span class="standings-name">PeekabooRacing</span><span class="standings-pts"><strong>52</strong></span></div>
-        <div class="standings-row"><span class="standings-rank">10</span><span class="standings-name">CtillVR</span><span class="standings-pts"><strong>46</strong></span></div>
-        <div class="standings-row"><span class="standings-rank">11</span><span class="standings-name">Ncardw11</span><span class="standings-pts"><strong>46</strong></span></div>
-        <div class="standings-row"><span class="standings-rank">12</span><span class="standings-name">Pawl</span><span class="standings-pts"><strong>45</strong></span></div>
-        <div class="standings-row"><span class="standings-rank">13</span><span class="standings-name">Speedysully</span><span class="standings-pts"><strong>35</strong></span></div>
-        <div class="standings-row"><span class="standings-rank">14</span><span class="standings-name">LART_Jesus</span><span class="standings-pts"><strong>27</strong></span></div>
-        <div class="standings-row"><span class="standings-rank">15</span><span class="standings-name">TheEliteWeasel61</span><span class="standings-pts"><strong>24</strong></span></div>
-        <div class="standings-row"><span class="standings-rank">16</span><span class="standings-name">Leadfoot</span><span class="standings-pts"><strong>17</strong></span></div>
+        <div class="standings-col-header">
+          <span>Individual Drivers</span>
+          <span class="standings-header-right">
+            <span class="avg-col-label">/ rnd</span>
+            <span class="updated-note">After R8</span>
+          </span>
+        </div>
+        <div class="standings-row leader"><span class="standings-rank podium">1</span><span class="standings-name">Sully</span><span class="standings-avg">21.0</span><span class="standings-pts"><strong>168</strong></span></div>
+        <div class="standings-row"><span class="standings-rank podium">2</span><span class="standings-name">Dark Delacroix</span><span class="standings-avg">16.3</span><span class="standings-pts"><strong>130</strong></span></div>
+        <div class="standings-row"><span class="standings-rank podium">3</span><span class="standings-name">Barry</span><span class="standings-avg">15.1</span><span class="standings-pts"><strong>121</strong></span></div>
+        <div class="standings-row"><span class="standings-rank">4</span><span class="standings-name">A. Zerpa</span><span class="standings-avg">14.4</span><span class="standings-pts"><strong>115</strong></span></div>
+        <div class="standings-row"><span class="standings-rank">5</span><span class="standings-name">PunkTree</span><span class="standings-avg">11.1</span><span class="standings-pts"><strong>89</strong></span></div>
+        <div class="standings-row"><span class="standings-rank">6</span><span class="standings-name">Jett</span><span class="standings-avg">11.0</span><span class="standings-pts"><strong>88</strong></span></div>
+        <div class="standings-row"><span class="standings-rank">7</span><span class="standings-name">Boltus</span><span class="standings-avg">10.9</span><span class="standings-pts"><strong>87</strong></span></div>
+        <div class="standings-row"><span class="standings-rank">8</span><span class="standings-name">TVDV</span><span class="standings-avg">9.0</span><span class="standings-pts"><strong>72</strong></span></div>
+        <div class="standings-row"><span class="standings-rank">9</span><span class="standings-name">PeekabooRacing</span><span class="standings-avg">6.5</span><span class="standings-pts"><strong>52</strong></span></div>
+        <div class="standings-row"><span class="standings-rank">10</span><span class="standings-name">CtillVR</span><span class="standings-avg">5.8</span><span class="standings-pts"><strong>46</strong></span></div>
+        <div class="standings-row"><span class="standings-rank">11</span><span class="standings-name">Ncardw11</span><span class="standings-avg">5.8</span><span class="standings-pts"><strong>46</strong></span></div>
+        <div class="standings-row"><span class="standings-rank">12</span><span class="standings-name">Pawl</span><span class="standings-avg">5.6</span><span class="standings-pts"><strong>45</strong></span></div>
+        <div class="standings-row"><span class="standings-rank">13</span><span class="standings-name">Speedysully</span><span class="standings-avg">4.4</span><span class="standings-pts"><strong>35</strong></span></div>
+        <div class="standings-row"><span class="standings-rank">14</span><span class="standings-name">LART_Jesus</span><span class="standings-avg">3.4</span><span class="standings-pts"><strong>27</strong></span></div>
+        <div class="standings-row"><span class="standings-rank">15</span><span class="standings-name">TheEliteWeasel61</span><span class="standings-avg">3.0</span><span class="standings-pts"><strong>24</strong></span></div>
+        <div class="standings-row"><span class="standings-rank">16</span><span class="standings-name">Leadfoot</span><span class="standings-avg">2.1</span><span class="standings-pts"><strong>17</strong></span></div>
       </div>
       <div class="standings-col">
         <div class="standings-col-header"><span>Teams</span><span class="updated-note">After R8</span></div>
@@ -475,56 +982,97 @@
 
   <section>
     <div class="section-head reveal">
-      <div class="section-num">05</div>
+      <div class="section-num">06</div>
       <h2>The Teams</h2>
     </div>
     <div class="teams-grid stagger">
+
       <div class="team-card leader">
         <div class="team-name">Sully-Sully</div>
-        <div class="team-drivers"><span class="team-driver">Sully</span><span class="team-driver">Speedysully</span></div>
-        <div class="team-pts">203 pts</div>
+        <div class="team-split">
+          <div class="split-row"><span class="team-driver">Sully</span><span class="split-pts">168</span></div>
+          <div class="split-track"><div class="split-fill" style="width:82.8%"></div></div>
+          <div class="split-row"><span class="team-driver">Speedysully</span><span class="split-pts">35</span></div>
+        </div>
+        <div class="team-pts">203 pts total</div>
       </div>
+
       <div class="team-card">
         <div class="team-name">Boltus-Zerpa</div>
-        <div class="team-drivers"><span class="team-driver">Boltus</span><span class="team-driver">A. Zerpa</span></div>
-        <div class="team-pts">202 pts</div>
+        <div class="team-split">
+          <div class="split-row"><span class="team-driver">Boltus</span><span class="split-pts">87</span></div>
+          <div class="split-track"><div class="split-fill" style="width:43.1%"></div></div>
+          <div class="split-row"><span class="team-driver">A. Zerpa</span><span class="split-pts">115</span></div>
+        </div>
+        <div class="team-pts">202 pts total</div>
       </div>
+
       <div class="team-card">
         <div class="team-name">Dark-Ctill</div>
-        <div class="team-drivers"><span class="team-driver">Dark Delacroix</span><span class="team-driver">CtillVR</span></div>
-        <div class="team-pts">176 pts</div>
+        <div class="team-split">
+          <div class="split-row"><span class="team-driver">Dark Delacroix</span><span class="split-pts">130</span></div>
+          <div class="split-track"><div class="split-fill" style="width:73.9%"></div></div>
+          <div class="split-row"><span class="team-driver">CtillVR</span><span class="split-pts">46</span></div>
+        </div>
+        <div class="team-pts">176 pts total</div>
       </div>
+
       <div class="team-card">
         <div class="team-name">Barry-Pawl</div>
-        <div class="team-drivers"><span class="team-driver">Barry</span><span class="team-driver">Pawl</span></div>
-        <div class="team-pts">166 pts</div>
+        <div class="team-split">
+          <div class="split-row"><span class="team-driver">Barry</span><span class="split-pts">121</span></div>
+          <div class="split-track"><div class="split-fill" style="width:72.9%"></div></div>
+          <div class="split-row"><span class="team-driver">Pawl</span><span class="split-pts">45</span></div>
+        </div>
+        <div class="team-pts">166 pts total</div>
       </div>
+
       <div class="team-card">
         <div class="team-name">Peekaboo-Jett</div>
-        <div class="team-drivers"><span class="team-driver">PeekabooRacing</span><span class="team-driver">Jett</span></div>
-        <div class="team-pts">140 pts</div>
+        <div class="team-split">
+          <div class="split-row"><span class="team-driver">PeekabooRacing</span><span class="split-pts">52</span></div>
+          <div class="split-track"><div class="split-fill" style="width:37.1%"></div></div>
+          <div class="split-row"><span class="team-driver">Jett</span><span class="split-pts">88</span></div>
+        </div>
+        <div class="team-pts">140 pts total</div>
       </div>
+
       <div class="team-card">
         <div class="team-name">TVDV-Ncard</div>
-        <div class="team-drivers"><span class="team-driver">TVDV</span><span class="team-driver">Ncardw11</span></div>
-        <div class="team-pts">118 pts</div>
+        <div class="team-split">
+          <div class="split-row"><span class="team-driver">TVDV</span><span class="split-pts">72</span></div>
+          <div class="split-track"><div class="split-fill" style="width:61.0%"></div></div>
+          <div class="split-row"><span class="team-driver">Ncardw11</span><span class="split-pts">46</span></div>
+        </div>
+        <div class="team-pts">118 pts total</div>
       </div>
+
       <div class="team-card">
         <div class="team-name">Punk-Lead</div>
-        <div class="team-drivers"><span class="team-driver">PunkTree</span><span class="team-driver">Leadfoot</span></div>
-        <div class="team-pts">106 pts</div>
+        <div class="team-split">
+          <div class="split-row"><span class="team-driver">PunkTree</span><span class="split-pts">89</span></div>
+          <div class="split-track"><div class="split-fill" style="width:84.0%"></div></div>
+          <div class="split-row"><span class="team-driver">Leadfoot</span><span class="split-pts">17</span></div>
+        </div>
+        <div class="team-pts">106 pts total</div>
       </div>
+
       <div class="team-card">
         <div class="team-name">Weasel-Jesus</div>
-        <div class="team-drivers"><span class="team-driver">TheEliteWeasel61</span><span class="team-driver">LART_Jesus</span></div>
-        <div class="team-pts">51 pts</div>
+        <div class="team-split">
+          <div class="split-row"><span class="team-driver">TheEliteWeasel61</span><span class="split-pts">24</span></div>
+          <div class="split-track"><div class="split-fill" style="width:47.1%"></div></div>
+          <div class="split-row"><span class="team-driver">LART_Jesus</span><span class="split-pts">27</span></div>
+        </div>
+        <div class="team-pts">51 pts total</div>
       </div>
+
     </div>
   </section>
 
   <section>
     <div class="section-head reveal">
-      <div class="section-num">06</div>
+      <div class="section-num">07</div>
       <h2>Room Settings</h2>
     </div>
     <div class="settings-grid reveal">
