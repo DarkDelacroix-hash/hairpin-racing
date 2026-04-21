@@ -598,10 +598,50 @@
     50% { opacity: 0.55; }
   }
 
+  /* Teams */
+  .teams-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+    margin-top: 4px;
+  }
+  .team-card {
+    border: 1px solid var(--line);
+    overflow: hidden;
+    transition: border-color 0.3s var(--ease), transform 0.3s var(--ease);
+  }
+  .team-card:hover {
+    border-color: rgba(245,211,0,0.35);
+    transform: translateY(-3px);
+  }
+  .team-label {
+    background: #161618;
+    border-bottom: 1px solid var(--line);
+    padding: 10px 18px;
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+  .team-drivers {
+    padding: 14px 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .team-driver {
+    font-family: var(--display);
+    font-size: 20px;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    line-height: 1.1;
+  }
+
   /* Mobile */
   @media (max-width: 720px) {
     .meta { grid-template-columns: repeat(2, 1fr); }
-    .groups, .assignment, .notes { grid-template-columns: 1fr; }
+    .groups, .assignment, .notes, .teams-grid { grid-template-columns: 1fr; }
     .assignment .odd { border-right: none; border-bottom: 1px solid var(--line); }
     .schedule td.class { width: auto; }
     .settings-grid .row { grid-template-columns: 110px 1fr; }
@@ -857,35 +897,67 @@
   <section>
     <div class="section-head reveal">
       <span class="section-num">08</span>
-      <h2>Registered Drivers</h2>
+      <h2>Teams</h2>
     </div>
-    <table class="schedule stagger">
-      <thead>
-        <tr><th>Discord</th><th>In-Game Name</th></tr>
-      </thead>
-      <tbody>
-        <tr><td class="race" style="width:auto;color:var(--ink-dim);font-weight:400;">Chief Sandbagger</td><td><span class="track">Dark Delacroix</span></td></tr>
-        <tr><td class="race" style="width:auto;color:var(--ink-dim);font-weight:400;">TheEliteWeasel61 [BFR]</td><td><span class="track">TheEliteWeasel61</span></td></tr>
-        <tr><td class="race" style="width:auto;color:var(--ink-dim);font-weight:400;">ncardw</td><td><span class="track">Ncardw</span></td></tr>
-        <tr><td class="race" style="width:auto;color:var(--ink-dim);font-weight:400;">Leadfoot GT</td><td><span class="track">Leadfoot-GT / Twistted wizard</span></td></tr>
-        <tr><td class="race" style="width:auto;color:var(--ink-dim);font-weight:400;">Ctill / shenanigas69</td><td><span class="track">Ctill-vr / Shenanigas69</span></td></tr>
-        <tr><td class="race" style="width:auto;color:var(--ink-dim);font-weight:400;">wreathafranklin</td><td><span class="track">Wreathafranklin / Rolling smoke</span></td></tr>
-        <tr><td class="race" style="width:auto;color:var(--ink-dim);font-weight:400;">Weaksauce412</td><td><span class="track">Jett Weaksauce412</span></td></tr>
-        <tr><td class="race" style="width:auto;color:var(--ink-dim);font-weight:400;">Boltus</td><td><span class="track">Zack_Bolton02</span></td></tr>
-        <tr><td class="race" style="width:auto;color:var(--ink-dim);font-weight:400;">Captain Krieg [BFR]</td><td><span class="track">Kyle Gillard13th</span></td></tr>
-        <tr><td class="race" style="width:auto;color:var(--ink-dim);font-weight:400;">Sully</td><td><span class="track">Sully Unsullyed</span></td></tr>
-        <tr><td class="race" style="width:auto;color:var(--ink-dim);font-weight:400;">Barry</td><td><span class="track">ALUPNYA79 Barry</span></td></tr>
-        <tr><td class="race" style="width:auto;color:var(--ink-dim);font-weight:400;">esully</td><td><span class="track">sullysmash8 Speedysully</span></td></tr>
-        <tr><td class="race" style="width:auto;color:var(--ink-dim);font-weight:400;">mxer699</td><td><span class="track">ICrazy</span></td></tr>
-        <tr><td class="race" style="width:auto;color:var(--ink-dim);font-weight:400;">Pawl [ARC]</td><td><span class="track">Pawl / krensmeyer</span></td></tr>
-        <tr><td class="race" style="width:auto;color:var(--ink-dim);font-weight:400;">Punk Tree</td><td><span class="track">Punk_Tree</span></td></tr>
-        <tr><td class="race" style="width:auto;color:var(--ink-dim);font-weight:400;">J. Flores</td><td><span class="track">LART_Jesus / michi_grifo</span></td></tr>
-        <tr class="swap"><td colspan="2">Reserves</td></tr>
-        <tr><td class="race" style="width:auto;color:var(--ink-dim);font-weight:400;">vdvbrothers</td><td><span class="track">VDVBrothers</span></td></tr>
-        <tr><td class="race" style="width:auto;color:var(--ink-dim);font-weight:400;">PeekabooRacing</td><td><span class="track">Clutch_load6 / Peekabooracing</span></td></tr>
-      </tbody>
-    </table>
-    <p class="dim reveal" style="margin-top:16px;">Grid full · 16 drivers · 2 reserves · Teams drawn at random. Confirmed team name: <strong style="color:var(--ink);">The Holy Rollers</strong> (Pawl + Barry).</p>
+    <p class="dim reveal" style="margin-bottom:20px;">Drawn at random. 8 teams · 2 drivers each.</p>
+    <div class="teams-grid stagger">
+      <div class="team-card">
+        <div class="team-label">Team 1</div>
+        <div class="team-drivers">
+          <div class="team-driver">Jett</div>
+          <div class="team-driver">Rolling Smoke</div>
+        </div>
+      </div>
+      <div class="team-card">
+        <div class="team-label">Team 2</div>
+        <div class="team-drivers">
+          <div class="team-driver">ICrazy</div>
+          <div class="team-driver">Ncardw11</div>
+        </div>
+      </div>
+      <div class="team-card">
+        <div class="team-label">Team 3</div>
+        <div class="team-drivers">
+          <div class="team-driver">Lart_Jesus</div>
+          <div class="team-driver">Pawl</div>
+        </div>
+      </div>
+      <div class="team-card">
+        <div class="team-label">Team 4</div>
+        <div class="team-drivers">
+          <div class="team-driver">Boltus</div>
+          <div class="team-driver">Kyle Gillard 13TH</div>
+        </div>
+      </div>
+      <div class="team-card">
+        <div class="team-label">Team 5</div>
+        <div class="team-drivers">
+          <div class="team-driver">Chief Sandbagger</div>
+          <div class="team-driver">Speedy Sully</div>
+        </div>
+      </div>
+      <div class="team-card">
+        <div class="team-label">Team 6</div>
+        <div class="team-drivers">
+          <div class="team-driver">Leadfoot GT</div>
+          <div class="team-driver">Sully</div>
+        </div>
+      </div>
+      <div class="team-card">
+        <div class="team-label">Team 7</div>
+        <div class="team-drivers">
+          <div class="team-driver">Ctill-Vr</div>
+          <div class="team-driver">The Elite Weasel 61</div>
+        </div>
+      </div>
+      <div class="team-card">
+        <div class="team-label">Team 8</div>
+        <div class="team-drivers">
+          <div class="team-driver">Punk Tree</div>
+          <div class="team-driver">Barry</div>
+        </div>
+      </div>
+    </div>
   </section>
 
   <footer class="reveal">
