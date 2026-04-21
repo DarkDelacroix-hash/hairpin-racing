@@ -550,10 +550,36 @@
   .rounds-note {
     font-family: var(--body);
     font-size: 11px;
-    color: oklch(64% 0.005 75 / 45%);
+    color: oklch(64% 0.005 75 / 80%);
     margin-top: 10px;
     letter-spacing: 0.02em;
     line-height: 1.6;
+  }
+
+  /* Chart line draw-in animation */
+  .chart-line {
+    stroke-dasharray: 9999;
+    stroke-dashoffset: 9999;
+    animation: drawLine 1.6s var(--ease-out) both;
+    animation-play-state: paused;
+  }
+  .chart-line-bp { animation-delay: 0.3s; }
+  .chart-line-dc { animation-delay: 0.3s; }
+  .chart-line-bz { animation-delay: 0.7s; }
+  .chart-line-ss { animation-delay: 1.2s; }
+  @keyframes drawLine { from { stroke-dashoffset: 9999; } to { stroke-dashoffset: 0; } }
+  .chart-wrap.in .chart-line { animation-play-state: running; }
+
+  .chart-wrap svg circle {
+    opacity: 0;
+    animation: fadeIn 0.35s ease-out 3.0s forwards;
+    animation-play-state: paused;
+  }
+  .chart-wrap.in svg circle { animation-play-state: running; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .chart-line { stroke-dashoffset: 0 !important; animation: none; }
+    .chart-wrap svg circle { opacity: 1 !important; animation: none; }
   }
 
   /* Settings */
@@ -576,6 +602,9 @@
   footer .sig { color: var(--accent); margin-top: 8px; font-family: var(--display); font-size: 22px; letter-spacing: 0.04em; }
 
   @media (max-width: 720px) {
+    header { padding: 36px 0 28px; }
+    section { padding: 36px 0; }
+    footer { padding: 32px 0 24px; }
     .meta { grid-template-columns: repeat(2, 1fr); }
     .standings-wrap { grid-template-columns: 1fr; }
     .how-grid { grid-template-columns: 1fr; }
@@ -590,14 +619,35 @@
       border-left: none; border-right: none;
       border-top: 1px solid oklch(56% 0.215 28 / 20%);
       border-bottom: 1px solid oklch(56% 0.215 28 / 20%);
+      padding: 14px 22px;
     }
+    .champ-facts { gap: 16px; padding: 14px 16px; }
     .champ-side.chasing-side { text-align: left; }
     .standings-avg { display: none; }
     .avg-col-label { display: none; }
     .moment-grid { grid-template-columns: 1fr; }
+    .moment-desc { max-width: none; }
     .legend-note { display: none; }
     .rounds-table { font-size: 11px; }
     .rounds-table td, .rounds-table th { padding: 8px 8px; }
+    /* Scrollable overflow containers */
+    .table-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+    .chart-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+    .chart-wrap svg { min-width: 600px; }
+    /* Nav: ensure 44px touch target */
+    .nav { padding: 12px 0; }
+    .nav a { padding: 10px 0; display: inline-flex; align-items: center; }
+  }
+  @media (max-width: 480px) {
+    /* Drop date column — track + status is enough on a phone */
+    .schedule-table .date-col { display: none; }
+    .schedule-table thead th:nth-child(2) { display: none; }
+    /* Slightly smaller chart min-width for narrow phones */
+    .chart-wrap svg { min-width: 520px; }
+    /* Tighter section head gap */
+    .section-head { gap: 12px; margin-bottom: 28px; }
+    /* Wrap padding reduction */
+    .wrap { padding: 0 16px; }
   }
   @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
@@ -697,7 +747,7 @@
       <div class="section-num">03</div>
       <h2>Race Schedule</h2>
     </div>
-    <div class="reveal">
+    <div class="reveal table-scroll">
       <table class="schedule-table">
         <thead>
           <tr>
@@ -739,29 +789,29 @@
         <line x1="45" y1="35"  x2="820" y2="35"  style="stroke:var(--line)" stroke-width="0.5" stroke-dasharray="4,6"/>
         <line x1="45" y1="185" x2="820" y2="185" style="stroke:var(--line)" stroke-width="1"/>
         <!-- Y-axis labels -->
-        <text x="38" y="152" text-anchor="end" style="font-family:'Azeret Mono',monospace;font-size:9px;fill:var(--ink-dim)">50</text>
-        <text x="38" y="114" text-anchor="end" style="font-family:'Azeret Mono',monospace;font-size:9px;fill:var(--ink-dim)">100</text>
-        <text x="38" y="77"  text-anchor="end" style="font-family:'Azeret Mono',monospace;font-size:9px;fill:var(--ink-dim)">150</text>
-        <text x="38" y="39"  text-anchor="end" style="font-family:'Azeret Mono',monospace;font-size:9px;fill:var(--ink-dim)">200</text>
+        <text x="38" y="152" text-anchor="end" style="font-family:'Azeret Mono',monospace;font-size:11px;fill:var(--ink-dim)">50</text>
+        <text x="38" y="114" text-anchor="end" style="font-family:'Azeret Mono',monospace;font-size:11px;fill:var(--ink-dim)">100</text>
+        <text x="38" y="77"  text-anchor="end" style="font-family:'Azeret Mono',monospace;font-size:11px;fill:var(--ink-dim)">150</text>
+        <text x="38" y="39"  text-anchor="end" style="font-family:'Azeret Mono',monospace;font-size:11px;fill:var(--ink-dim)">200</text>
         <!-- X-axis round labels -->
-        <text x="60"  y="205" text-anchor="middle" style="font-family:'Azeret Mono',monospace;font-size:10px;fill:var(--ink-dim)">R1</text>
-        <text x="163" y="205" text-anchor="middle" style="font-family:'Azeret Mono',monospace;font-size:10px;fill:var(--ink-dim)">R2</text>
-        <text x="266" y="205" text-anchor="middle" style="font-family:'Azeret Mono',monospace;font-size:10px;fill:var(--ink-dim)">R3</text>
-        <text x="369" y="205" text-anchor="middle" style="font-family:'Azeret Mono',monospace;font-size:10px;fill:var(--ink-dim)">R4</text>
-        <text x="471" y="205" text-anchor="middle" style="font-family:'Azeret Mono',monospace;font-size:10px;fill:var(--ink-dim)">R5</text>
-        <text x="574" y="205" text-anchor="middle" style="font-family:'Azeret Mono',monospace;font-size:10px;fill:var(--ink-dim)">R6</text>
-        <text x="677" y="205" text-anchor="middle" style="font-family:'Azeret Mono',monospace;font-size:10px;fill:var(--ink-dim)">R7</text>
-        <text x="780" y="205" text-anchor="middle" style="font-family:'Azeret Mono',monospace;font-size:10px;fill:var(--ink-dim)">R8</text>
+        <text x="60"  y="205" text-anchor="middle" style="font-family:'Azeret Mono',monospace;font-size:11px;fill:var(--ink-dim)">R1</text>
+        <text x="163" y="205" text-anchor="middle" style="font-family:'Azeret Mono',monospace;font-size:11px;fill:var(--ink-dim)">R2</text>
+        <text x="266" y="205" text-anchor="middle" style="font-family:'Azeret Mono',monospace;font-size:11px;fill:var(--ink-dim)">R3</text>
+        <text x="369" y="205" text-anchor="middle" style="font-family:'Azeret Mono',monospace;font-size:11px;fill:var(--ink-dim)">R4</text>
+        <text x="471" y="205" text-anchor="middle" style="font-family:'Azeret Mono',monospace;font-size:11px;fill:var(--ink-dim)">R5</text>
+        <text x="574" y="205" text-anchor="middle" style="font-family:'Azeret Mono',monospace;font-size:11px;fill:var(--ink-dim)">R6</text>
+        <text x="677" y="205" text-anchor="middle" style="font-family:'Azeret Mono',monospace;font-size:11px;fill:var(--ink-dim)">R7</text>
+        <text x="780" y="205" text-anchor="middle" style="font-family:'Azeret Mono',monospace;font-size:11px;fill:var(--ink-dim)">R8</text>
         <!-- Lead change markers (yellow dashed verticals) -->
-        <line x1="471" y1="20" x2="471" y2="185" style="stroke:oklch(86% 0.175 97 / 25%)" stroke-width="1" stroke-dasharray="3,5"/>
-        <line x1="574" y1="20" x2="574" y2="185" style="stroke:oklch(86% 0.175 97 / 25%)" stroke-width="1" stroke-dasharray="3,5"/>
-        <line x1="677" y1="20" x2="677" y2="185" style="stroke:oklch(86% 0.175 97 / 25%)" stroke-width="1" stroke-dasharray="3,5"/>
+        <line x1="471" y1="20" x2="471" y2="185" style="stroke:oklch(86% 0.175 97 / 45%)" stroke-width="1" stroke-dasharray="3,5"/>
+        <line x1="574" y1="20" x2="574" y2="185" style="stroke:oklch(86% 0.175 97 / 45%)" stroke-width="1" stroke-dasharray="3,5"/>
+        <line x1="677" y1="20" x2="677" y2="185" style="stroke:oklch(86% 0.175 97 / 45%)" stroke-width="1" stroke-dasharray="3,5"/>
         <!-- Lead change labels -->
-        <text x="471" y="17" text-anchor="middle" style="font-family:'Archivo',sans-serif;font-size:7px;fill:oklch(86% 0.175 97 / 55%);letter-spacing:0.08em">SS LEADS</text>
-        <text x="574" y="17" text-anchor="middle" style="font-family:'Archivo',sans-serif;font-size:7px;fill:oklch(86% 0.175 97 / 55%);letter-spacing:0.08em">BZ LEADS</text>
-        <text x="677" y="17" text-anchor="middle" style="font-family:'Archivo',sans-serif;font-size:7px;fill:oklch(86% 0.175 97 / 55%);letter-spacing:0.08em">SS LEADS</text>
+        <text x="471" y="17" text-anchor="middle" style="font-family:'Archivo',sans-serif;font-size:9px;fill:oklch(86% 0.175 97 / 80%);letter-spacing:0.08em">SS LEADS</text>
+        <text x="574" y="17" text-anchor="middle" style="font-family:'Archivo',sans-serif;font-size:9px;fill:oklch(86% 0.175 97 / 80%);letter-spacing:0.08em">BZ LEADS</text>
+        <text x="677" y="17" text-anchor="middle" style="font-family:'Archivo',sans-serif;font-size:9px;fill:oklch(86% 0.175 97 / 80%);letter-spacing:0.08em">SS LEADS</text>
         <!-- BP (dimmest): 60,170 163,151 266,122 369,117 471,96 574,81 677,67 780,61 -->
-        <polyline points="60,170 163,151 266,122 369,117 471,96 574,81 677,67 780,61"
+        <polyline class="chart-line chart-line-bp" points="60,170 163,151 266,122 369,117 471,96 574,81 677,67 780,61"
           style="fill:none;stroke:oklch(48% 0.004 75)" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/>
         <circle cx="60"  cy="170" r="2.5" style="fill:oklch(48% 0.004 75)"/>
         <circle cx="163" cy="151" r="2.5" style="fill:oklch(48% 0.004 75)"/>
@@ -772,7 +822,7 @@
         <circle cx="677" cy="67"  r="2.5" style="fill:oklch(48% 0.004 75)"/>
         <circle cx="780" cy="61"  r="2.5" style="fill:oklch(48% 0.004 75)"/>
         <!-- DC: 60,170 163,157 266,138 369,124 471,112 574,97 677,79 780,53 -->
-        <polyline points="60,170 163,157 266,138 369,124 471,112 574,97 677,79 780,53"
+        <polyline class="chart-line chart-line-dc" points="60,170 163,157 266,138 369,124 471,112 574,97 677,79 780,53"
           style="fill:none;stroke:var(--ink-dim)" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/>
         <circle cx="60"  cy="170" r="2.5" style="fill:var(--ink-dim)"/>
         <circle cx="163" cy="157" r="2.5" style="fill:var(--ink-dim)"/>
@@ -783,7 +833,7 @@
         <circle cx="677" cy="79"  r="2.5" style="fill:var(--ink-dim)"/>
         <circle cx="780" cy="53"  r="2.5" style="fill:var(--ink-dim)"/>
         <!-- BZ: 60,163 163,139 266,126 369,100 471,94 574,68 677,58 780,34 -->
-        <polyline points="60,163 163,139 266,126 369,100 471,94 574,68 677,58 780,34"
+        <polyline class="chart-line chart-line-bz" points="60,163 163,139 266,126 369,100 471,94 574,68 677,58 780,34"
           style="fill:none;stroke:oklch(82% 0.003 75)" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
         <circle cx="60"  cy="163" r="3.5" style="fill:oklch(82% 0.003 75)"/>
         <circle cx="163" cy="139" r="3.5" style="fill:oklch(82% 0.003 75)"/>
@@ -796,7 +846,7 @@
         <circle cx="677" cy="58"  r="3.5" style="fill:oklch(82% 0.003 75)"/>
         <circle cx="780" cy="34"  r="3.5" style="fill:oklch(82% 0.003 75)"/>
         <!-- SS (accent/red, on top): 60,166 163,144 266,131 369,110 471,92 574,73 677,55 780,33 -->
-        <polyline points="60,166 163,144 266,131 369,110 471,92 574,73 677,55 780,33"
+        <polyline class="chart-line chart-line-ss" points="60,166 163,144 266,131 369,110 471,92 574,73 677,55 780,33"
           style="fill:none;stroke:var(--accent)" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
         <circle cx="60"  cy="166" r="3.5" style="fill:var(--accent)"/>
         <circle cx="163" cy="144" r="3.5" style="fill:var(--accent)"/>
@@ -829,7 +879,7 @@
           <div class="moment-tag">Crisis</div>
           <div class="moment-title">The BZ Collapse</div>
           <div class="moment-stat">8 pts · BZ's worst round by 10 pts</div>
-          <div class="moment-desc">Zerpa suffered an ABS malfunction at Deep Forest Reverse. Boltus-Zerpa's 8-point haul was their flattest stretch all season. Sully-Sully led the championship for the first time after trailing for four straight rounds.</div>
+          <div class="moment-desc">Boltus-Zerpa scored only 8 points at Deep Forest Reverse — by far their worst round of the season. Sully-Sully gained the gap they needed and led the championship for the first time after trailing for four straight rounds.</div>
         </div>
       </div>
       <div class="moment-card">
@@ -862,7 +912,7 @@
     </div>
 
     <div class="sub-head reveal">Team Scores by Round · Top 4</div>
-    <div class="reveal">
+    <div class="reveal table-scroll">
       <table class="rounds-table">
         <thead>
           <tr>
