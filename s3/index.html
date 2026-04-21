@@ -572,16 +572,49 @@
   @keyframes drawLine { from { stroke-dashoffset: 9999; } to { stroke-dashoffset: 0; } }
   .chart-wrap.in .chart-line { animation-play-state: running; }
 
-  .chart-wrap svg circle {
+  /* Grid lines and axis labels fade in before data lines */
+  .chart-grid {
     opacity: 0;
-    animation: fadeIn 0.35s ease-out 3.0s forwards;
+    animation: fadeIn 0.5s ease-out forwards;
     animation-play-state: paused;
   }
-  .chart-wrap.in svg circle { animation-play-state: running; }
+  .chart-axis {
+    opacity: 0;
+    animation: fadeIn 0.4s ease-out forwards;
+    animation-play-state: paused;
+  }
+  .chart-wrap.in .chart-grid,
+  .chart-wrap.in .chart-axis { animation-play-state: running; }
+
+  /* Per-round circles pop in as the line front reaches each point */
+  .chart-circle {
+    opacity: 0;
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: popCircle 0.25s var(--ease-out) forwards;
+    animation-play-state: paused;
+  }
+  .chart-wrap.in .chart-circle { animation-play-state: running; }
+  @keyframes popCircle {
+    from { opacity: 0; transform: scale(0); }
+    to   { opacity: 1; transform: scale(1); }
+  }
+
+  /* Lead-change markers and end labels reveal after lines complete */
+  .chart-end-label {
+    opacity: 0;
+    animation: fadeIn 0.35s ease-out forwards;
+    animation-play-state: paused;
+  }
+  .chart-wrap.in .lead-vline,
+  .chart-wrap.in .lead-label,
+  .chart-wrap.in .chart-end-label { animation-play-state: running; }
 
   @media (prefers-reduced-motion: reduce) {
     .chart-line { stroke-dashoffset: 0 !important; animation: none; }
-    .chart-wrap svg circle { opacity: 1 !important; animation: none; }
+    .chart-grid, .chart-axis, .chart-circle, .lead-vline, .lead-label, .chart-end-label {
+      opacity: 1 !important; transform: none !important; animation: none;
+    }
   }
 
   /* Settings */
@@ -626,8 +659,8 @@
     background: repeating-conic-gradient(oklch(18% 0.008 25) 0% 25%, var(--bg) 0% 50%) 0 0 / 18px 18px;
   }
   /* SVG lead-change annotations — moved from inline to CSS for theme control */
-  .lead-label { fill: oklch(86% 0.175 97 / 80%); }
-  .lead-vline { stroke: oklch(86% 0.175 97 / 45%); }
+  .lead-label { fill: oklch(86% 0.175 97 / 80%); opacity: 0; animation: fadeIn 0.35s ease-out forwards; animation-play-state: paused; }
+  .lead-vline { stroke: oklch(86% 0.175 97 / 45%); opacity: 0; animation: fadeIn 0.4s ease-out forwards; animation-play-state: paused; }
   [data-theme="light"] .lead-label { fill: oklch(44% 0.16 97); }
   [data-theme="light"] .lead-vline { stroke: oklch(44% 0.16 97 / 55%); }
 
@@ -832,85 +865,85 @@
     <div class="chart-wrap reveal">
       <div class="chart-label">Championship Trajectory · Top 4 Teams · Cumulative Points</div>
       <svg width="100%" viewBox="0 0 860 225" xmlns="http://www.w3.org/2000/svg" style="display:block;overflow:visible">
-        <!-- Horizontal grid lines -->
-        <line x1="45" y1="148" x2="820" y2="148" style="stroke:var(--line)" stroke-width="0.5" stroke-dasharray="4,6"/>
-        <line x1="45" y1="110" x2="820" y2="110" style="stroke:var(--line)" stroke-width="0.5" stroke-dasharray="4,6"/>
-        <line x1="45" y1="73"  x2="820" y2="73"  style="stroke:var(--line)" stroke-width="0.5" stroke-dasharray="4,6"/>
-        <line x1="45" y1="35"  x2="820" y2="35"  style="stroke:var(--line)" stroke-width="0.5" stroke-dasharray="4,6"/>
-        <line x1="45" y1="185" x2="820" y2="185" style="stroke:var(--line)" stroke-width="1"/>
+        <!-- Horizontal grid lines — fade in first -->
+        <line class="chart-grid" x1="45" y1="148" x2="820" y2="148" style="stroke:var(--line);animation-delay:0s"    stroke-width="0.5" stroke-dasharray="4,6"/>
+        <line class="chart-grid" x1="45" y1="110" x2="820" y2="110" style="stroke:var(--line);animation-delay:0.08s" stroke-width="0.5" stroke-dasharray="4,6"/>
+        <line class="chart-grid" x1="45" y1="73"  x2="820" y2="73"  style="stroke:var(--line);animation-delay:0.16s" stroke-width="0.5" stroke-dasharray="4,6"/>
+        <line class="chart-grid" x1="45" y1="35"  x2="820" y2="35"  style="stroke:var(--line);animation-delay:0.24s" stroke-width="0.5" stroke-dasharray="4,6"/>
+        <line class="chart-grid" x1="45" y1="185" x2="820" y2="185" style="stroke:var(--line);animation-delay:0s"    stroke-width="1"/>
         <!-- Y-axis labels -->
-        <text x="38" y="152" text-anchor="end" style="font-family:'Azeret Mono',monospace;font-size:11px;fill:var(--ink-dim)">50</text>
-        <text x="38" y="114" text-anchor="end" style="font-family:'Azeret Mono',monospace;font-size:11px;fill:var(--ink-dim)">100</text>
-        <text x="38" y="77"  text-anchor="end" style="font-family:'Azeret Mono',monospace;font-size:11px;fill:var(--ink-dim)">150</text>
-        <text x="38" y="39"  text-anchor="end" style="font-family:'Azeret Mono',monospace;font-size:11px;fill:var(--ink-dim)">200</text>
+        <text class="chart-axis" x="38" y="152" text-anchor="end" style="font-family:'Azeret Mono',monospace;font-size:11px;fill:var(--ink-dim);animation-delay:0s">50</text>
+        <text class="chart-axis" x="38" y="114" text-anchor="end" style="font-family:'Azeret Mono',monospace;font-size:11px;fill:var(--ink-dim);animation-delay:0.08s">100</text>
+        <text class="chart-axis" x="38" y="77"  text-anchor="end" style="font-family:'Azeret Mono',monospace;font-size:11px;fill:var(--ink-dim);animation-delay:0.16s">150</text>
+        <text class="chart-axis" x="38" y="39"  text-anchor="end" style="font-family:'Azeret Mono',monospace;font-size:11px;fill:var(--ink-dim);animation-delay:0.24s">200</text>
         <!-- X-axis round labels -->
-        <text x="60"  y="205" text-anchor="middle" style="font-family:'Azeret Mono',monospace;font-size:11px;fill:var(--ink-dim)">R1</text>
-        <text x="163" y="205" text-anchor="middle" style="font-family:'Azeret Mono',monospace;font-size:11px;fill:var(--ink-dim)">R2</text>
-        <text x="266" y="205" text-anchor="middle" style="font-family:'Azeret Mono',monospace;font-size:11px;fill:var(--ink-dim)">R3</text>
-        <text x="369" y="205" text-anchor="middle" style="font-family:'Azeret Mono',monospace;font-size:11px;fill:var(--ink-dim)">R4</text>
-        <text x="471" y="205" text-anchor="middle" style="font-family:'Azeret Mono',monospace;font-size:11px;fill:var(--ink-dim)">R5</text>
-        <text x="574" y="205" text-anchor="middle" style="font-family:'Azeret Mono',monospace;font-size:11px;fill:var(--ink-dim)">R6</text>
-        <text x="677" y="205" text-anchor="middle" style="font-family:'Azeret Mono',monospace;font-size:11px;fill:var(--ink-dim)">R7</text>
-        <text x="780" y="205" text-anchor="middle" style="font-family:'Azeret Mono',monospace;font-size:11px;fill:var(--ink-dim)">R8</text>
-        <!-- Lead change markers (yellow dashed verticals) -->
-        <line class="lead-vline" x1="471" y1="20" x2="471" y2="185" stroke-width="1" stroke-dasharray="3,5"/>
-        <line class="lead-vline" x1="574" y1="20" x2="574" y2="185" stroke-width="1" stroke-dasharray="3,5"/>
-        <line class="lead-vline" x1="677" y1="20" x2="677" y2="185" stroke-width="1" stroke-dasharray="3,5"/>
+        <text class="chart-axis" x="60"  y="205" text-anchor="middle" style="font-family:'Azeret Mono',monospace;font-size:11px;fill:var(--ink-dim);animation-delay:0s">R1</text>
+        <text class="chart-axis" x="163" y="205" text-anchor="middle" style="font-family:'Azeret Mono',monospace;font-size:11px;fill:var(--ink-dim);animation-delay:0.05s">R2</text>
+        <text class="chart-axis" x="266" y="205" text-anchor="middle" style="font-family:'Azeret Mono',monospace;font-size:11px;fill:var(--ink-dim);animation-delay:0.10s">R3</text>
+        <text class="chart-axis" x="369" y="205" text-anchor="middle" style="font-family:'Azeret Mono',monospace;font-size:11px;fill:var(--ink-dim);animation-delay:0.15s">R4</text>
+        <text class="chart-axis" x="471" y="205" text-anchor="middle" style="font-family:'Azeret Mono',monospace;font-size:11px;fill:var(--ink-dim);animation-delay:0.20s">R5</text>
+        <text class="chart-axis" x="574" y="205" text-anchor="middle" style="font-family:'Azeret Mono',monospace;font-size:11px;fill:var(--ink-dim);animation-delay:0.25s">R6</text>
+        <text class="chart-axis" x="677" y="205" text-anchor="middle" style="font-family:'Azeret Mono',monospace;font-size:11px;fill:var(--ink-dim);animation-delay:0.30s">R7</text>
+        <text class="chart-axis" x="780" y="205" text-anchor="middle" style="font-family:'Azeret Mono',monospace;font-size:11px;fill:var(--ink-dim);animation-delay:0.35s">R8</text>
+        <!-- Lead change markers — reveal after lines complete (~2.85s+) -->
+        <line class="lead-vline" x1="471" y1="20" x2="471" y2="185" stroke-width="1" stroke-dasharray="3,5" style="animation-delay:2.85s"/>
+        <line class="lead-vline" x1="574" y1="20" x2="574" y2="185" stroke-width="1" stroke-dasharray="3,5" style="animation-delay:3.0s"/>
+        <line class="lead-vline" x1="677" y1="20" x2="677" y2="185" stroke-width="1" stroke-dasharray="3,5" style="animation-delay:3.15s"/>
         <!-- Lead change labels -->
-        <text class="lead-label" x="471" y="17" text-anchor="middle" style="font-family:'Archivo',sans-serif;font-size:9px;letter-spacing:0.08em">SS LEADS</text>
-        <text class="lead-label" x="574" y="17" text-anchor="middle" style="font-family:'Archivo',sans-serif;font-size:9px;letter-spacing:0.08em">BZ LEADS</text>
-        <text class="lead-label" x="677" y="17" text-anchor="middle" style="font-family:'Archivo',sans-serif;font-size:9px;letter-spacing:0.08em">SS LEADS</text>
-        <!-- BP (dimmest): 60,170 163,151 266,122 369,117 471,96 574,81 677,67 780,61 -->
+        <text class="lead-label" x="471" y="17" text-anchor="middle" style="font-family:'Archivo',sans-serif;font-size:9px;letter-spacing:0.08em;animation-delay:3.05s">SS LEADS</text>
+        <text class="lead-label" x="574" y="17" text-anchor="middle" style="font-family:'Archivo',sans-serif;font-size:9px;letter-spacing:0.08em;animation-delay:3.2s">BZ LEADS</text>
+        <text class="lead-label" x="677" y="17" text-anchor="middle" style="font-family:'Archivo',sans-serif;font-size:9px;letter-spacing:0.08em;animation-delay:3.35s">SS LEADS</text>
+        <!-- BP (dimmest): circles pop in as line front reaches each round -->
         <polyline class="chart-line chart-line-bp" points="60,170 163,151 266,122 369,117 471,96 574,81 677,67 780,61"
           style="fill:none;stroke:oklch(48% 0.004 75)" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/>
-        <circle cx="60"  cy="170" r="2.5" style="fill:oklch(48% 0.004 75)"/>
-        <circle cx="163" cy="151" r="2.5" style="fill:oklch(48% 0.004 75)"/>
-        <circle cx="266" cy="122" r="2.5" style="fill:oklch(48% 0.004 75)"/>
-        <circle cx="369" cy="117" r="2.5" style="fill:oklch(48% 0.004 75)"/>
-        <circle cx="471" cy="96"  r="2.5" style="fill:oklch(48% 0.004 75)"/>
-        <circle cx="574" cy="81"  r="2.5" style="fill:oklch(48% 0.004 75)"/>
-        <circle cx="677" cy="67"  r="2.5" style="fill:oklch(48% 0.004 75)"/>
-        <circle cx="780" cy="61"  r="2.5" style="fill:oklch(48% 0.004 75)"/>
-        <!-- DC: 60,170 163,157 266,138 369,124 471,112 574,97 677,79 780,53 -->
+        <circle class="chart-circle" cx="60"  cy="170" r="2.5" style="fill:oklch(48% 0.004 75);animation-delay:0.30s"/>
+        <circle class="chart-circle" cx="163" cy="151" r="2.5" style="fill:oklch(48% 0.004 75);animation-delay:0.53s"/>
+        <circle class="chart-circle" cx="266" cy="122" r="2.5" style="fill:oklch(48% 0.004 75);animation-delay:0.76s"/>
+        <circle class="chart-circle" cx="369" cy="117" r="2.5" style="fill:oklch(48% 0.004 75);animation-delay:0.99s"/>
+        <circle class="chart-circle" cx="471" cy="96"  r="2.5" style="fill:oklch(48% 0.004 75);animation-delay:1.21s"/>
+        <circle class="chart-circle" cx="574" cy="81"  r="2.5" style="fill:oklch(48% 0.004 75);animation-delay:1.44s"/>
+        <circle class="chart-circle" cx="677" cy="67"  r="2.5" style="fill:oklch(48% 0.004 75);animation-delay:1.67s"/>
+        <circle class="chart-circle" cx="780" cy="61"  r="2.5" style="fill:oklch(48% 0.004 75);animation-delay:1.90s"/>
+        <!-- DC -->
         <polyline class="chart-line chart-line-dc" points="60,170 163,157 266,138 369,124 471,112 574,97 677,79 780,53"
           style="fill:none;stroke:var(--ink-dim)" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/>
-        <circle cx="60"  cy="170" r="2.5" style="fill:var(--ink-dim)"/>
-        <circle cx="163" cy="157" r="2.5" style="fill:var(--ink-dim)"/>
-        <circle cx="266" cy="138" r="2.5" style="fill:var(--ink-dim)"/>
-        <circle cx="369" cy="124" r="2.5" style="fill:var(--ink-dim)"/>
-        <circle cx="471" cy="112" r="2.5" style="fill:var(--ink-dim)"/>
-        <circle cx="574" cy="97"  r="2.5" style="fill:var(--ink-dim)"/>
-        <circle cx="677" cy="79"  r="2.5" style="fill:var(--ink-dim)"/>
-        <circle cx="780" cy="53"  r="2.5" style="fill:var(--ink-dim)"/>
-        <!-- BZ: 60,163 163,139 266,126 369,100 471,94 574,68 677,58 780,34 -->
+        <circle class="chart-circle" cx="60"  cy="170" r="2.5" style="fill:var(--ink-dim);animation-delay:0.30s"/>
+        <circle class="chart-circle" cx="163" cy="157" r="2.5" style="fill:var(--ink-dim);animation-delay:0.53s"/>
+        <circle class="chart-circle" cx="266" cy="138" r="2.5" style="fill:var(--ink-dim);animation-delay:0.76s"/>
+        <circle class="chart-circle" cx="369" cy="124" r="2.5" style="fill:var(--ink-dim);animation-delay:0.99s"/>
+        <circle class="chart-circle" cx="471" cy="112" r="2.5" style="fill:var(--ink-dim);animation-delay:1.21s"/>
+        <circle class="chart-circle" cx="574" cy="97"  r="2.5" style="fill:var(--ink-dim);animation-delay:1.44s"/>
+        <circle class="chart-circle" cx="677" cy="79"  r="2.5" style="fill:var(--ink-dim);animation-delay:1.67s"/>
+        <circle class="chart-circle" cx="780" cy="53"  r="2.5" style="fill:var(--ink-dim);animation-delay:1.90s"/>
+        <!-- BZ -->
         <polyline class="chart-line chart-line-bz" points="60,163 163,139 266,126 369,100 471,94 574,68 677,58 780,34"
           style="fill:none;stroke:oklch(82% 0.003 75)" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
-        <circle cx="60"  cy="163" r="3.5" style="fill:oklch(82% 0.003 75)"/>
-        <circle cx="163" cy="139" r="3.5" style="fill:oklch(82% 0.003 75)"/>
-        <circle cx="266" cy="126" r="3.5" style="fill:oklch(82% 0.003 75)"/>
-        <circle cx="369" cy="100" r="3.5" style="fill:oklch(82% 0.003 75)"/>
-        <!-- BZ R5 crisis dot: red ring to mark the flat stretch -->
-        <circle cx="471" cy="94"  r="5"   style="fill:none;stroke:var(--accent)" stroke-width="1.5"/>
-        <circle cx="471" cy="94"  r="3"   style="fill:oklch(82% 0.003 75)"/>
-        <circle cx="574" cy="68"  r="3.5" style="fill:oklch(82% 0.003 75)"/>
-        <circle cx="677" cy="58"  r="3.5" style="fill:oklch(82% 0.003 75)"/>
-        <circle cx="780" cy="34"  r="3.5" style="fill:oklch(82% 0.003 75)"/>
-        <!-- SS (accent/red, on top): 60,166 163,144 266,131 369,110 471,92 574,73 677,55 780,33 -->
+        <circle class="chart-circle" cx="60"  cy="163" r="3.5" style="fill:oklch(82% 0.003 75);animation-delay:0.70s"/>
+        <circle class="chart-circle" cx="163" cy="139" r="3.5" style="fill:oklch(82% 0.003 75);animation-delay:0.93s"/>
+        <circle class="chart-circle" cx="266" cy="126" r="3.5" style="fill:oklch(82% 0.003 75);animation-delay:1.16s"/>
+        <circle class="chart-circle" cx="369" cy="100" r="3.5" style="fill:oklch(82% 0.003 75);animation-delay:1.39s"/>
+        <!-- BZ R5 crisis dot: red ring + inner dot -->
+        <circle class="chart-circle" cx="471" cy="94"  r="5"   style="fill:none;stroke:var(--accent);stroke-width:1.5;animation-delay:1.61s"/>
+        <circle class="chart-circle" cx="471" cy="94"  r="3"   style="fill:oklch(82% 0.003 75);animation-delay:1.61s"/>
+        <circle class="chart-circle" cx="574" cy="68"  r="3.5" style="fill:oklch(82% 0.003 75);animation-delay:1.84s"/>
+        <circle class="chart-circle" cx="677" cy="58"  r="3.5" style="fill:oklch(82% 0.003 75);animation-delay:2.07s"/>
+        <circle class="chart-circle" cx="780" cy="34"  r="3.5" style="fill:oklch(82% 0.003 75);animation-delay:2.30s"/>
+        <!-- SS (accent/red, on top) -->
         <polyline class="chart-line chart-line-ss" points="60,166 163,144 266,131 369,110 471,92 574,73 677,55 780,33"
           style="fill:none;stroke:var(--accent)" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
-        <circle cx="60"  cy="166" r="3.5" style="fill:var(--accent)"/>
-        <circle cx="163" cy="144" r="3.5" style="fill:var(--accent)"/>
-        <circle cx="266" cy="131" r="3.5" style="fill:var(--accent)"/>
-        <circle cx="369" cy="110" r="3.5" style="fill:var(--accent)"/>
-        <circle cx="471" cy="92"  r="3.5" style="fill:var(--accent)"/>
-        <circle cx="574" cy="73"  r="3.5" style="fill:var(--accent)"/>
-        <circle cx="677" cy="55"  r="3.5" style="fill:var(--accent)"/>
-        <circle cx="780" cy="33"  r="3.5" style="fill:var(--accent)"/>
-        <!-- End labels -->
-        <text x="790" y="30"  style="font-family:'Archivo',sans-serif;font-size:9px;font-weight:700;fill:var(--accent)">SS</text>
-        <text x="790" y="41"  style="font-family:'Azeret Mono',monospace;font-size:8px;fill:oklch(56% 0.215 28 / 65%)">203</text>
-        <text x="790" y="55"  style="font-family:'Archivo',sans-serif;font-size:9px;font-weight:700;fill:oklch(82% 0.003 75)">BZ</text>
-        <text x="790" y="66"  style="font-family:'Azeret Mono',monospace;font-size:8px;fill:oklch(82% 0.003 75 / 65%)">202</text>
+        <circle class="chart-circle" cx="60"  cy="166" r="3.5" style="fill:var(--accent);animation-delay:1.20s"/>
+        <circle class="chart-circle" cx="163" cy="144" r="3.5" style="fill:var(--accent);animation-delay:1.43s"/>
+        <circle class="chart-circle" cx="266" cy="131" r="3.5" style="fill:var(--accent);animation-delay:1.66s"/>
+        <circle class="chart-circle" cx="369" cy="110" r="3.5" style="fill:var(--accent);animation-delay:1.89s"/>
+        <circle class="chart-circle" cx="471" cy="92"  r="3.5" style="fill:var(--accent);animation-delay:2.11s"/>
+        <circle class="chart-circle" cx="574" cy="73"  r="3.5" style="fill:var(--accent);animation-delay:2.34s"/>
+        <circle class="chart-circle" cx="677" cy="55"  r="3.5" style="fill:var(--accent);animation-delay:2.57s"/>
+        <circle class="chart-circle" cx="780" cy="33"  r="3.5" style="fill:var(--accent);animation-delay:2.80s"/>
+        <!-- End labels — appear after SS line completes -->
+        <text class="chart-end-label" x="790" y="30"  style="font-family:'Archivo',sans-serif;font-size:9px;font-weight:700;fill:var(--accent);animation-delay:2.85s">SS</text>
+        <text class="chart-end-label" x="790" y="41"  style="font-family:'Azeret Mono',monospace;font-size:8px;fill:oklch(56% 0.215 28 / 65%);animation-delay:2.95s">203</text>
+        <text class="chart-end-label" x="790" y="55"  style="font-family:'Archivo',sans-serif;font-size:9px;font-weight:700;fill:oklch(82% 0.003 75);animation-delay:2.88s">BZ</text>
+        <text class="chart-end-label" x="790" y="66"  style="font-family:'Azeret Mono',monospace;font-size:8px;fill:oklch(82% 0.003 75 / 65%);animation-delay:2.98s">202</text>
       </svg>
       <div class="chart-legend">
         <div class="legend-item"><span class="legend-line" style="background:var(--accent)"></span>Sully-Sully (203)</div>
