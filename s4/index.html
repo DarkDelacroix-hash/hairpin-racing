@@ -6,17 +6,17 @@
 <title>Hairpin Racing — Season 4</title>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo:wght@400;500;600;700;800;900&family=Azeret+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
 <style>
   :root {
-    --bg: #0b0b0c;
-    --bg-2: #131315;
-    --ink: #f5f5f2;
-    --ink-dim: #9a9a96;
-    --line: #262627;
-    --accent: #f5d300;
-    --accent-2: #ff3b30;
-    --mono: 'JetBrains Mono', ui-monospace, monospace;
+    --bg: oklch(9% 0.008 97);
+    --bg-2: oklch(11.5% 0.006 97);
+    --ink: oklch(96% 0.003 97);
+    --ink-dim: oklch(64% 0.005 97);
+    --line: oklch(19% 0.007 97);
+    --accent: oklch(86% 0.175 97);
+    --accent-2: oklch(56% 0.215 28);
+    --mono: 'Azeret Mono', ui-monospace, monospace;
     --body: 'Archivo', system-ui, sans-serif;
     --display: 'Anton', 'Archivo', sans-serif;
     --ease: cubic-bezier(0.2, 0.8, 0.2, 1);
@@ -31,19 +31,18 @@
     color: var(--ink);
     font-family: var(--body);
     font-size: 16px;
-    line-height: 1.55;
+    line-height: 1.6;
     -webkit-font-smoothing: antialiased;
     position: relative;
   }
 
-  /* Animated backdrop: glow + moving speed lines */
   body::before {
     content: "";
     position: fixed;
     inset: 0;
     background:
-      radial-gradient(circle at 85% -10%, rgba(245,211,0,0.10), transparent 40%),
-      radial-gradient(circle at 0% 110%, rgba(255,59,48,0.08), transparent 45%);
+      radial-gradient(circle at 85% -10%, oklch(86% 0.175 97 / 0.10), transparent 40%),
+      radial-gradient(circle at 0% 110%, oklch(56% 0.215 28 / 0.08), transparent 45%);
     pointer-events: none;
     z-index: 0;
   }
@@ -52,7 +51,7 @@
     position: fixed;
     inset: 0;
     background-image:
-      linear-gradient(90deg, transparent 0, transparent 49.5%, rgba(255,255,255,0.025) 50%, transparent 50.5%, transparent 100%);
+      linear-gradient(90deg, transparent 0, transparent 49.5%, oklch(96% 0.003 97 / 0.025) 50%, transparent 50.5%, transparent 100%);
     background-size: 80px 100%;
     pointer-events: none;
     z-index: 0;
@@ -65,10 +64,9 @@
 
   .wrap, header, section, footer, .marquee, .flag { position: relative; z-index: 1; }
 
-  /* Moving checkered flag strips */
   .flag {
     height: 18px;
-    background: repeating-conic-gradient(#fff 0% 25%, #0b0b0c 0% 50%) 0 0 / 18px 18px;
+    background: repeating-conic-gradient(oklch(96% 0.003 97) 0% 25%, var(--bg) 0% 50%) 0 0 / 18px 18px;
     animation: flagmove 3s linear infinite;
   }
   @keyframes flagmove {
@@ -76,7 +74,6 @@
     to { background-position: 72px 0; }
   }
 
-  /* Ticker */
   .marquee {
     overflow: hidden;
     border-bottom: 1px solid var(--line);
@@ -88,15 +85,14 @@
     gap: 48px;
     white-space: nowrap;
     animation: scroll 38s linear infinite;
-    font-family: var(--mono);
-    font-size: 12px;
-    letter-spacing: 0.25em;
-    text-transform: uppercase;
+    font-family: var(--body);
+    font-size: 13px;
+    letter-spacing: 0.04em;
     color: var(--ink-dim);
     width: max-content;
   }
   .marquee-track span.dot { color: var(--accent); }
-  .marquee-track b { color: var(--ink); font-weight: 500; }
+  .marquee-track b { color: var(--ink); font-weight: 600; }
   @keyframes scroll {
     from { transform: translateX(0); }
     to { transform: translateX(-50%); }
@@ -104,10 +100,9 @@
 
   .wrap { max-width: 960px; margin: 0 auto; padding: 0 24px; }
 
-  /* Header */
   header { padding: 72px 0 48px; border-bottom: 1px solid var(--line); }
   .eyebrow {
-    font-family: var(--mono);
+    font-family: var(--body);
     font-size: 12px;
     letter-spacing: 0.2em;
     text-transform: uppercase;
@@ -189,7 +184,7 @@
   @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
 
   .meta .k {
-    font-family: var(--mono);
+    font-family: var(--body);
     font-size: 11px;
     letter-spacing: 0.15em;
     text-transform: uppercase;
@@ -204,7 +199,6 @@
     transition: color 0.3s var(--ease);
   }
 
-  /* Reveal on scroll */
   .reveal {
     opacity: 0;
     transform: translateY(28px);
@@ -213,21 +207,20 @@
   }
   .reveal.in { opacity: 1; transform: translateY(0); }
 
-  /* Stagger children */
   .stagger:not(.in) > * { opacity: 0; transform: translateY(20px); }
   .stagger > * {
     transition: opacity 0.7s var(--ease-out), transform 0.7s var(--ease-out);
   }
   .stagger.in > * { opacity: 1; transform: translateY(0); }
-  .stagger.in > *:nth-child(1) { transition-delay: 0.05s; }
-  .stagger.in > *:nth-child(2) { transition-delay: 0.12s; }
-  .stagger.in > *:nth-child(3) { transition-delay: 0.19s; }
-  .stagger.in > *:nth-child(4) { transition-delay: 0.26s; }
-  .stagger.in > *:nth-child(5) { transition-delay: 0.33s; }
-  .stagger.in > *:nth-child(6) { transition-delay: 0.4s; }
-  .stagger.in > *:nth-child(7) { transition-delay: 0.47s; }
-  .stagger.in > *:nth-child(8) { transition-delay: 0.54s; }
-  .stagger.in > *:nth-child(9) { transition-delay: 0.61s; }
+  .stagger.in > *:nth-child(1)  { transition-delay: 0.05s; }
+  .stagger.in > *:nth-child(2)  { transition-delay: 0.12s; }
+  .stagger.in > *:nth-child(3)  { transition-delay: 0.19s; }
+  .stagger.in > *:nth-child(4)  { transition-delay: 0.26s; }
+  .stagger.in > *:nth-child(5)  { transition-delay: 0.33s; }
+  .stagger.in > *:nth-child(6)  { transition-delay: 0.40s; }
+  .stagger.in > *:nth-child(7)  { transition-delay: 0.47s; }
+  .stagger.in > *:nth-child(8)  { transition-delay: 0.54s; }
+  .stagger.in > *:nth-child(9)  { transition-delay: 0.61s; }
   .stagger.in > *:nth-child(10) { transition-delay: 0.68s; }
   .stagger.in > *:nth-child(11) { transition-delay: 0.75s; }
   .stagger.in > *:nth-child(12) { transition-delay: 0.82s; }
@@ -252,13 +245,12 @@
     text-transform: uppercase;
   }
 
-  p { margin: 0 0 14px; color: var(--ink); }
+  p { margin: 0 0 14px; color: var(--ink); max-width: 65ch; }
   .dim { color: var(--ink-dim); }
 
-  /* Callout with sweeping light */
   .callout {
     border: 1px solid var(--accent);
-    background: linear-gradient(180deg, rgba(245,211,0,0.08), rgba(245,211,0,0) 80%);
+    background: oklch(86% 0.175 97 / 0.06);
     margin-top: 8px;
     position: relative;
   }
@@ -268,37 +260,23 @@
     top: -10px; left: 20px;
     background: var(--bg);
     color: var(--accent);
-    font-family: var(--mono);
+    font-family: var(--body);
     font-size: 11px;
     letter-spacing: 0.2em;
     padding: 0 8px;
     z-index: 3;
+    text-transform: uppercase;
   }
   .callout-inner {
-    position: relative;
-    overflow: hidden;
     padding: 24px 26px;
   }
-  .callout-inner::after {
-    content: "";
-    position: absolute;
-    top: 0; left: -40%;
-    width: 40%; height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(245,211,0,0.18), transparent);
-    animation: sweep 4.5s ease-in-out infinite;
-    pointer-events: none;
-  }
-  @keyframes sweep {
-    0% { left: -40%; }
-    60%, 100% { left: 100%; }
-  }
-  .callout p { margin: 0; font-size: 17px; position: relative; z-index: 1; }
+  .callout p { margin: 0; font-size: 17px; }
 
   /* Schedule */
   .schedule {
     width: 100%;
     border-collapse: collapse;
-    font-family: var(--mono);
+    font-family: var(--body);
     font-size: 14px;
     margin-top: 4px;
   }
@@ -314,33 +292,35 @@
     color: var(--ink-dim);
     font-weight: 500;
     border-bottom: 1px solid var(--ink);
+    font-family: var(--body);
   }
   .schedule tr { transition: background 0.25s var(--ease); }
-  .schedule tbody tr:not(.swap):hover { background: rgba(245,211,0,0.04); }
-  .schedule tbody tr:not(.swap):hover td.race { color: #fff; }
+  .schedule tbody tr:not(.swap):hover { background: oklch(86% 0.175 97 / 0.04); }
+  .schedule tbody tr:not(.swap):hover td.race { color: var(--ink); }
   .schedule tbody tr:not(.swap):hover td.track { transform: translateX(4px); }
   .schedule td.race {
     color: var(--accent);
     font-weight: 700;
     width: 70px;
+    font-family: var(--mono);
     transition: color 0.25s var(--ease);
   }
   .schedule td.class { width: 180px; color: var(--ink); }
   .schedule td.track {
-    font-family: var(--body);
     font-weight: 600;
     font-size: 15px;
     transition: transform 0.25s var(--ease);
     display: inline-block;
   }
   .schedule tr.swap td {
-    background: #1a1a1c;
+    background: var(--bg-2);
     color: var(--accent-2);
     text-align: center;
     font-size: 11px;
-    letter-spacing: 0.25em;
+    letter-spacing: 0.22em;
     text-transform: uppercase;
     padding: 10px 16px;
+    font-family: var(--body);
   }
   .schedule tr.swap td::before,
   .schedule tr.swap td::after {
@@ -352,8 +332,7 @@
   @keyframes spin { to { transform: rotate(360deg); } }
   .schedule tr.special td.class { color: var(--accent); }
 
-  /* Assignment */
-  /* Ladder — P1–P8 class assignment */
+  /* Assignment ladder */
   .ladder {
     border: 1px solid var(--line);
     margin-top: 4px;
@@ -375,7 +354,7 @@
     color: var(--ink);
   }
   .rung .arrow {
-    font-family: var(--mono);
+    font-family: var(--body);
     color: var(--ink-dim);
     font-size: 14px;
   }
@@ -385,13 +364,13 @@
     letter-spacing: 0.04em;
     text-transform: uppercase;
   }
-  .rung.c1 { background: linear-gradient(90deg, rgba(245,211,0,0.07), transparent 70%); }
+  .rung.c1 { background: linear-gradient(90deg, oklch(86% 0.175 97 / 0.07), transparent 70%); }
   .rung.c1 .cls { color: var(--accent); }
-  .rung.c2 { background: linear-gradient(90deg, rgba(255,59,48,0.07), transparent 70%); }
+  .rung.c2 { background: linear-gradient(90deg, oklch(56% 0.215 28 / 0.07), transparent 70%); }
   .rung.c2 .cls { color: var(--accent-2); }
   .rung:hover { padding-left: 30px; }
-  .rung.c1:hover { background: linear-gradient(90deg, rgba(245,211,0,0.14), transparent 70%); }
-  .rung.c2:hover { background: linear-gradient(90deg, rgba(255,59,48,0.14), transparent 70%); }
+  .rung.c1:hover { background: linear-gradient(90deg, oklch(86% 0.175 97 / 0.14), transparent 70%); }
+  .rung.c2:hover { background: linear-gradient(90deg, oklch(56% 0.215 28 / 0.14), transparent 70%); }
 
   .assignment {
     display: grid;
@@ -409,13 +388,13 @@
   .assignment > div:hover { transform: translateY(-3px); }
   .assignment .odd {
     border-right: 1px solid var(--line);
-    background: linear-gradient(135deg, rgba(245,211,0,0.1), transparent);
+    background: linear-gradient(135deg, oklch(86% 0.175 97 / 0.10), transparent);
   }
   .assignment .even {
-    background: linear-gradient(135deg, rgba(255,59,48,0.1), transparent);
+    background: linear-gradient(135deg, oklch(56% 0.215 28 / 0.10), transparent);
   }
   .assignment .pos {
-    font-family: var(--mono);
+    font-family: var(--body);
     font-size: 11px;
     letter-spacing: 0.2em;
     color: var(--ink-dim);
@@ -431,10 +410,10 @@
   .assignment .odd .class-big { color: var(--accent); }
   .assignment .even .class-big { color: var(--accent-2); }
   .assignment .team-list {
-    font-family: var(--mono);
+    font-family: var(--body);
     font-size: 13px;
     color: var(--ink-dim);
-    letter-spacing: 0.05em;
+    letter-spacing: 0.02em;
   }
 
   /* Groups */
@@ -449,28 +428,29 @@
     padding: 20px 22px;
     transition: border-color 0.3s var(--ease), transform 0.3s var(--ease);
   }
-  .group.good { border-color: rgba(245,211,0,0.4); }
-  .group.bad { border-color: rgba(255,59,48,0.4); }
+  .group.good { border-color: oklch(86% 0.175 97 / 0.40); }
+  .group.bad  { border-color: oklch(56% 0.215 28 / 0.40); }
   .group.good:hover { border-color: var(--accent); transform: translateY(-3px); }
-  .group.bad:hover { border-color: var(--accent-2); transform: translateY(-3px); }
+  .group.bad:hover  { border-color: var(--accent-2); transform: translateY(-3px); }
   .group h4 {
-    font-family: var(--mono);
+    font-family: var(--body);
     font-size: 11px;
     letter-spacing: 0.2em;
     margin: 0 0 10px;
     color: var(--ink-dim);
     text-transform: uppercase;
+    font-weight: 600;
   }
   .group.good h4 { color: var(--accent); }
-  .group.bad h4 { color: var(--accent-2); }
+  .group.bad h4  { color: var(--accent-2); }
   .group ul { margin: 0; padding: 0; list-style: none; font-size: 14px; }
   .group ul li {
     padding: 4px 0;
     transition: transform 0.2s var(--ease), color 0.2s var(--ease);
   }
-  .group ul li:hover { transform: translateX(4px); color: #fff; }
+  .group ul li:hover { transform: translateX(4px); color: var(--ink); }
 
-  /* Flow */
+  /* Race night flow */
   .flow {
     display: flex;
     gap: 0;
@@ -493,16 +473,17 @@
     content: "";
     position: absolute;
     inset: 0;
-    background: linear-gradient(135deg, rgba(245,211,0,0.15), transparent 60%);
+    background: linear-gradient(135deg, oklch(86% 0.175 97 / 0.15), transparent 60%);
     opacity: 0;
     transition: opacity 0.3s var(--ease);
   }
   .flow .step:hover::before { opacity: 1; }
   .flow .step .n {
-    font-family: var(--mono);
+    font-family: var(--body);
     color: var(--accent);
     font-size: 11px;
     letter-spacing: 0.2em;
+    text-transform: uppercase;
     position: relative;
   }
   .flow .step .t {
@@ -513,7 +494,7 @@
     position: relative;
   }
   .flow .step .d {
-    font-family: var(--mono);
+    font-family: var(--body);
     font-size: 12px;
     color: var(--ink-dim);
     margin-top: 6px;
@@ -526,7 +507,6 @@
     grid-template-columns: 1fr;
     gap: 0;
     border: 1px solid var(--line);
-    font-family: var(--mono);
     font-size: 13px;
   }
   .settings-grid .row {
@@ -536,50 +516,80 @@
     transition: background 0.25s var(--ease);
   }
   .settings-grid .row:last-child { border-bottom: none; }
-  .settings-grid .row:hover { background: rgba(245,211,0,0.03); }
+  .settings-grid .row:hover { background: oklch(86% 0.175 97 / 0.03); }
   .settings-grid .k {
     padding: 14px 18px;
-    background: #161618;
+    background: var(--bg-2);
     color: var(--ink-dim);
     text-transform: uppercase;
     letter-spacing: 0.1em;
     font-size: 11px;
     border-right: 1px solid var(--line);
+    font-family: var(--body);
+    font-weight: 500;
   }
-  .settings-grid .v { padding: 14px 18px; color: var(--ink); }
+  .settings-grid .v {
+    padding: 14px 18px;
+    color: var(--ink);
+    font-family: var(--mono);
+    font-size: 13px;
+  }
   .settings-grid .v.bold { color: var(--accent); font-weight: 700; }
 
-  /* Notes */
+  /* Season Logistics notes — numbered, no side-stripe */
   .notes {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 28px;
+    gap: 16px;
     margin-top: 8px;
+    counter-reset: note;
   }
   .note {
-    border-left: 2px solid var(--accent);
-    padding: 4px 0 4px 20px;
-    transition: border-color 0.3s var(--ease), padding-left 0.3s var(--ease), border-left-width 0.3s var(--ease);
+    background: var(--bg-2);
+    border: 1px solid var(--line);
+    padding: 24px 26px;
+    counter-increment: note;
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.3s var(--ease), transform 0.3s var(--ease);
   }
   .note:hover {
-    border-left-color: var(--accent-2);
-    border-left-width: 4px;
-    padding-left: 22px;
+    border-color: oklch(64% 0.005 97 / 30%);
+    transform: translateY(-2px);
+  }
+  .note::after {
+    content: "0" counter(note);
+    font-family: var(--display);
+    font-size: 72px;
+    line-height: 1;
+    letter-spacing: -0.02em;
+    color: oklch(86% 0.175 97 / 10%);
+    position: absolute;
+    top: 12px;
+    right: 16px;
+    pointer-events: none;
   }
   .note h4 {
     font-family: var(--display);
-    font-size: 22px;
-    margin: 0 0 8px;
+    font-size: 20px;
+    margin: 0 0 10px;
     text-transform: uppercase;
     letter-spacing: 0.02em;
+    position: relative;
   }
-  .note p { margin: 0; font-size: 15px; color: var(--ink-dim); }
+  .note p {
+    margin: 0;
+    font-size: 15px;
+    color: var(--ink-dim);
+    max-width: 44ch;
+    position: relative;
+  }
   .note strong { color: var(--ink); }
 
   footer {
     padding: 56px 0 40px;
     text-align: center;
-    font-family: var(--mono);
+    font-family: var(--body);
     font-size: 11px;
     letter-spacing: 0.25em;
     color: var(--ink-dim);
@@ -611,18 +621,19 @@
     transition: border-color 0.3s var(--ease), transform 0.3s var(--ease);
   }
   .team-card:hover {
-    border-color: rgba(245,211,0,0.35);
+    border-color: oklch(86% 0.175 97 / 0.35);
     transform: translateY(-3px);
   }
   .team-label {
-    background: #161618;
+    background: var(--bg-2);
     border-bottom: 1px solid var(--line);
     padding: 10px 18px;
-    font-family: var(--mono);
+    font-family: var(--body);
     font-size: 11px;
     letter-spacing: 0.2em;
     text-transform: uppercase;
     color: var(--accent);
+    font-weight: 600;
   }
   .team-drivers {
     padding: 14px 18px;
@@ -638,7 +649,6 @@
     line-height: 1.1;
   }
 
-  /* Mobile */
   @media (max-width: 720px) {
     .meta { grid-template-columns: repeat(2, 1fr); }
     .groups, .assignment, .notes, .teams-grid { grid-template-columns: 1fr; }
@@ -649,7 +659,6 @@
     .flow .step:last-child { border-bottom: none; }
   }
 
-  /* Reduced motion */
   @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after {
       animation-duration: 0.01ms !important;
@@ -667,24 +676,24 @@
 
 <div class="marquee">
   <div class="marquee-track">
-    <span><b>SEASON 4</b></span><span class="dot">●</span>
-    <span>TUESDAYS 9 PM ET</span><span class="dot">●</span>
-    <span>10 RACES</span><span class="dot">●</span>
-    <span>4 CLASSES</span><span class="dot">●</span>
-    <span><b>GR1 · GR2 · GR3 · GR4</b></span><span class="dot">●</span>
-    <span>8 TEAMS</span><span class="dot">●</span>
-    <span>NO VGTs</span><span class="dot">●</span>
-    <span>NO DRS</span><span class="dot">●</span>
-    <span>SEE YOU ON TRACK</span><span class="dot">●</span>
-    <span><b>SEASON 4</b></span><span class="dot">●</span>
-    <span>TUESDAYS 9 PM ET</span><span class="dot">●</span>
-    <span>10 RACES</span><span class="dot">●</span>
-    <span>4 CLASSES</span><span class="dot">●</span>
-    <span><b>GR1 · GR2 · GR3 · GR4</b></span><span class="dot">●</span>
-    <span>8 TEAMS</span><span class="dot">●</span>
-    <span>NO VGTs</span><span class="dot">●</span>
-    <span>NO DRS</span><span class="dot">●</span>
-    <span>SEE YOU ON TRACK</span><span class="dot">●</span>
+    <span><b>Season 4</b></span><span class="dot">●</span>
+    <span>Tuesdays 9 PM ET</span><span class="dot">●</span>
+    <span>10 races</span><span class="dot">●</span>
+    <span>4 classes</span><span class="dot">●</span>
+    <span><b>Gr1 · Gr2 · Gr3 · Gr4</b></span><span class="dot">●</span>
+    <span>8 teams</span><span class="dot">●</span>
+    <span>No VGTs</span><span class="dot">●</span>
+    <span>No DRS</span><span class="dot">●</span>
+    <span>See you on track</span><span class="dot">●</span>
+    <span><b>Season 4</b></span><span class="dot">●</span>
+    <span>Tuesdays 9 PM ET</span><span class="dot">●</span>
+    <span>10 races</span><span class="dot">●</span>
+    <span>4 classes</span><span class="dot">●</span>
+    <span><b>Gr1 · Gr2 · Gr3 · Gr4</b></span><span class="dot">●</span>
+    <span>8 teams</span><span class="dot">●</span>
+    <span>No VGTs</span><span class="dot">●</span>
+    <span>No DRS</span><span class="dot">●</span>
+    <span>See you on track</span><span class="dot">●</span>
   </div>
 </div>
 
@@ -803,17 +812,17 @@
     </div>
     <div class="flow stagger">
       <div class="step">
-        <div class="n">STEP 01</div>
+        <div class="n">Step 01</div>
         <div class="t">Practice</div>
         <div class="d">Warm up · tune · test</div>
       </div>
       <div class="step">
-        <div class="n">STEP 02</div>
+        <div class="n">Step 02</div>
         <div class="t">Qualifier</div>
         <div class="d">10 min · 180s runoff</div>
       </div>
       <div class="step">
-        <div class="n">STEP 03</div>
+        <div class="n">Step 03</div>
         <div class="t">Endurance</div>
         <div class="d">50 min main event</div>
       </div>
