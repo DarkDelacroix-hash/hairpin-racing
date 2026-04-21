@@ -7,6 +7,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo:wght@400;500;600;700;800;900&family=Azeret+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+<script>(function(){var t=localStorage.getItem('hairpin-theme')||(window.matchMedia('(prefers-color-scheme: light)').matches?'light':'dark');document.documentElement.dataset.theme=t;})();</script>
 <style>
   :root {
     --bg: oklch(9% 0.006 80);
@@ -21,6 +22,7 @@
     --display: 'Anton', 'Archivo', sans-serif;
     --ease: cubic-bezier(0.2, 0.8, 0.2, 1);
     --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+    color-scheme: dark light;
   }
 
   * { box-sizing: border-box; }
@@ -404,6 +406,54 @@
     50% { opacity: 0.55; }
   }
 
+  /* ── Light theme ── */
+  [data-theme="light"] {
+    --bg: oklch(97% 0.003 80);
+    --bg-2: oklch(92.5% 0.004 80);
+    --ink: oklch(11% 0.006 80);
+    --ink-dim: oklch(47% 0.005 80);
+    --line: oklch(83% 0.005 80);
+    --accent: oklch(50% 0.17 97);
+    --accent-2: oklch(50% 0.215 28);
+    color-scheme: light;
+  }
+  [data-theme="light"] body::before {
+    background:
+      radial-gradient(circle at 85% -10%, oklch(50% 0.17 97 / 7%), transparent 40%),
+      radial-gradient(circle at 0% 110%, oklch(50% 0.215 28 / 5%), transparent 45%);
+  }
+  [data-theme="light"] body::after {
+    background-image: linear-gradient(90deg, transparent 0, transparent 49.5%, oklch(0% 0 0 / 2%) 50%, transparent 50.5%, transparent 100%);
+  }
+  [data-theme="light"] .flag {
+    background: repeating-conic-gradient(oklch(18% 0.005 80) 0% 25%, var(--bg) 0% 50%) 0 0 / 18px 18px;
+  }
+  /* S4 card "Pre-Season" badge uses bright yellow border — darken for light bg */
+  [data-theme="light"] .season-card.upcoming .status {
+    border-color: oklch(50% 0.17 97 / 0.50);
+    background: oklch(50% 0.17 97 / 0.06);
+  }
+
+  /* Theme toggle */
+  .theme-btn {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 100;
+    font-family: var(--mono);
+    font-size: 9px;
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--ink-dim);
+    background: var(--bg-2);
+    border: 1px solid var(--line);
+    padding: 7px 12px;
+    cursor: pointer;
+    transition: color 0.2s var(--ease), border-color 0.2s var(--ease), background 0.2s var(--ease);
+  }
+  .theme-btn:hover { color: var(--ink); border-color: var(--ink-dim); }
+
   @media (max-width: 600px) {
     .stats-strip { grid-template-columns: repeat(2, 1fr); }
     .seasons { grid-template-columns: 1fr; }
@@ -500,6 +550,22 @@
 </footer>
 
 <div class="flag"></div>
+
+<button class="theme-btn" aria-label="Toggle colour theme">○ light</button>
+
+<script>
+  (function() {
+    const btn = document.querySelector('.theme-btn');
+    function updateBtn(t) { if (btn) btn.textContent = t === 'dark' ? '○ light' : '● dark'; }
+    updateBtn(document.documentElement.dataset.theme || 'dark');
+    if (btn) btn.addEventListener('click', function() {
+      const next = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
+      document.documentElement.dataset.theme = next;
+      localStorage.setItem('hairpin-theme', next);
+      updateBtn(next);
+    });
+  })();
+</script>
 
 </body>
 </html>
