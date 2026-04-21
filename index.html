@@ -209,7 +209,7 @@
   /* Season cards */
   .seasons {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: 2fr 1fr;
     gap: 0;
     border: 1px solid var(--line);
     border-top: none;
@@ -232,6 +232,32 @@
   .season-card:nth-child(1) { animation-delay: 0.7s; }
   .season-card:nth-child(2) { animation-delay: 0.85s; border-right: none; }
   @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
+
+  /* Active card: more space, larger number, brighter */
+  .season-card.active { padding: 56px 48px; }
+  .season-card.active .num {
+    font-size: clamp(72px, 11vw, 148px);
+  }
+  /* Upcoming card: compact number fits the narrower column */
+  .season-card.upcoming .num {
+    font-size: clamp(36px, 5vw, 64px);
+  }
+
+  /* Round progress bar (S3 card only) */
+  .season-progress { margin-top: 24px; position: relative; }
+  .progress-track { height: 1px; background: var(--line); position: relative; overflow: hidden; }
+  .progress-fill { position: absolute; left: 0; top: 0; height: 100%; }
+  .season-card.active .progress-fill { background: var(--accent-2); }
+  .progress-label {
+    font-family: var(--body);
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-dim);
+    display: block;
+    margin-top: 8px;
+  }
 
   .season-card::before {
     content: "";
@@ -281,7 +307,7 @@
     text-transform: uppercase;
     position: relative;
   }
-  .season-card.active .num { color: var(--ink-dim); }
+  .season-card.active .num { color: var(--ink); }
   .season-card.upcoming .num { color: var(--accent); }
 
   .season-card .label {
@@ -361,6 +387,10 @@
     .season-card { border-right: none; border-bottom: 1px solid var(--line); }
     .season-card:last-child { border-bottom: none; }
     .season-card:hover { padding-left: 36px; }
+    /* Reset active card overrides — both full-width on mobile */
+    .season-card.active { padding: 40px 36px; }
+    .season-card.active .num { font-size: clamp(56px, 12vw, 96px); color: var(--ink-dim); }
+    .season-card.upcoming .num { font-size: clamp(56px, 12vw, 96px); }
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -419,6 +449,10 @@
       <div class="meta-row">
         <div class="meta-item">Tuesdays · 9:00 PM ET</div>
         <div class="meta-item">Wraps Apr 28</div>
+      </div>
+      <div class="season-progress">
+        <div class="progress-track"><div class="progress-fill" style="width:80%"></div></div>
+        <span class="progress-label">Round 9 of 10 · Autopolis tonight</span>
       </div>
       <div class="arrow">→</div>
     </a>
