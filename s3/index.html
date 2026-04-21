@@ -7,6 +7,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400&family=Azeret+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+<script>(function(){var t=localStorage.getItem('hairpin-theme')||(window.matchMedia('(prefers-color-scheme: light)').matches?'light':'dark');document.documentElement.dataset.theme=t;})();</script>
 <style>
   :root {
     --bg: oklch(9% 0.008 25);
@@ -21,6 +22,7 @@
     --display: 'Anton', 'Archivo', sans-serif;
     --ease: cubic-bezier(0.2, 0.8, 0.2, 1);
     --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+    color-scheme: dark light;
   }
 
   * { box-sizing: border-box; }
@@ -601,6 +603,54 @@
   footer { padding: 48px 0 36px; text-align: center; font-family: var(--body); font-size: 11px; font-weight: 600; letter-spacing: 0.25em; color: var(--ink-dim); text-transform: uppercase; position: relative; z-index: 1; }
   footer .sig { color: var(--accent); margin-top: 8px; font-family: var(--display); font-size: 22px; letter-spacing: 0.04em; }
 
+  /* ── Light theme ── */
+  [data-theme="light"] {
+    --bg: oklch(97% 0.004 25);
+    --bg-2: oklch(92.5% 0.005 25);
+    --ink: oklch(11% 0.008 25);
+    --ink-dim: oklch(47% 0.007 75);
+    --line: oklch(83% 0.006 25);
+    --accent: oklch(50% 0.215 28);
+    --accent-2: oklch(52% 0.17 97);
+    color-scheme: light;
+  }
+  [data-theme="light"] body::before {
+    background:
+      radial-gradient(circle at 15% -10%, oklch(50% 0.215 28 / 7%), transparent 40%),
+      radial-gradient(circle at 95% 105%, oklch(52% 0.17 97 / 5%), transparent 40%);
+  }
+  [data-theme="light"] body::after {
+    background-image: linear-gradient(90deg, transparent 0, transparent 49.5%, oklch(0% 0 0 / 2%) 50%, transparent 50.5%, transparent 100%);
+  }
+  [data-theme="light"] .flag {
+    background: repeating-conic-gradient(oklch(18% 0.008 25) 0% 25%, var(--bg) 0% 50%) 0 0 / 18px 18px;
+  }
+  /* SVG lead-change annotations — moved from inline to CSS for theme control */
+  .lead-label { fill: oklch(86% 0.175 97 / 80%); }
+  .lead-vline { stroke: oklch(86% 0.175 97 / 45%); }
+  [data-theme="light"] .lead-label { fill: oklch(44% 0.16 97); }
+  [data-theme="light"] .lead-vline { stroke: oklch(44% 0.16 97 / 55%); }
+
+  /* Theme toggle button */
+  .theme-btn {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 100;
+    font-family: var(--mono);
+    font-size: 9px;
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--ink-dim);
+    background: var(--bg-2);
+    border: 1px solid var(--line);
+    padding: 7px 12px;
+    cursor: pointer;
+    transition: color 0.2s var(--ease), border-color 0.2s var(--ease), background 0.2s var(--ease);
+  }
+  .theme-btn:hover { color: var(--ink); border-color: var(--ink-dim); }
+
   @media (max-width: 720px) {
     header { padding: 36px 0 28px; }
     section { padding: 36px 0; }
@@ -803,13 +853,13 @@
         <text x="677" y="205" text-anchor="middle" style="font-family:'Azeret Mono',monospace;font-size:11px;fill:var(--ink-dim)">R7</text>
         <text x="780" y="205" text-anchor="middle" style="font-family:'Azeret Mono',monospace;font-size:11px;fill:var(--ink-dim)">R8</text>
         <!-- Lead change markers (yellow dashed verticals) -->
-        <line x1="471" y1="20" x2="471" y2="185" style="stroke:oklch(86% 0.175 97 / 45%)" stroke-width="1" stroke-dasharray="3,5"/>
-        <line x1="574" y1="20" x2="574" y2="185" style="stroke:oklch(86% 0.175 97 / 45%)" stroke-width="1" stroke-dasharray="3,5"/>
-        <line x1="677" y1="20" x2="677" y2="185" style="stroke:oklch(86% 0.175 97 / 45%)" stroke-width="1" stroke-dasharray="3,5"/>
+        <line class="lead-vline" x1="471" y1="20" x2="471" y2="185" stroke-width="1" stroke-dasharray="3,5"/>
+        <line class="lead-vline" x1="574" y1="20" x2="574" y2="185" stroke-width="1" stroke-dasharray="3,5"/>
+        <line class="lead-vline" x1="677" y1="20" x2="677" y2="185" stroke-width="1" stroke-dasharray="3,5"/>
         <!-- Lead change labels -->
-        <text x="471" y="17" text-anchor="middle" style="font-family:'Archivo',sans-serif;font-size:9px;fill:oklch(86% 0.175 97 / 80%);letter-spacing:0.08em">SS LEADS</text>
-        <text x="574" y="17" text-anchor="middle" style="font-family:'Archivo',sans-serif;font-size:9px;fill:oklch(86% 0.175 97 / 80%);letter-spacing:0.08em">BZ LEADS</text>
-        <text x="677" y="17" text-anchor="middle" style="font-family:'Archivo',sans-serif;font-size:9px;fill:oklch(86% 0.175 97 / 80%);letter-spacing:0.08em">SS LEADS</text>
+        <text class="lead-label" x="471" y="17" text-anchor="middle" style="font-family:'Archivo',sans-serif;font-size:9px;letter-spacing:0.08em">SS LEADS</text>
+        <text class="lead-label" x="574" y="17" text-anchor="middle" style="font-family:'Archivo',sans-serif;font-size:9px;letter-spacing:0.08em">BZ LEADS</text>
+        <text class="lead-label" x="677" y="17" text-anchor="middle" style="font-family:'Archivo',sans-serif;font-size:9px;letter-spacing:0.08em">SS LEADS</text>
         <!-- BP (dimmest): 60,170 163,151 266,122 369,117 471,96 574,81 677,67 780,61 -->
         <polyline class="chart-line chart-line-bp" points="60,170 163,151 266,122 369,117 471,96 574,81 677,67 780,61"
           style="fill:none;stroke:oklch(48% 0.004 75)" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/>
@@ -1170,11 +1220,26 @@
 
 <div class="flag"></div>
 
+<button class="theme-btn" aria-label="Toggle colour theme">○ light</button>
+
 <script>
   const obs = new IntersectionObserver((entries) => {
     entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); obs.unobserve(e.target); } });
   }, { threshold: 0.1 });
   document.querySelectorAll('.reveal, .stagger').forEach(el => obs.observe(el));
+
+  // Theme toggle
+  (function() {
+    const btn = document.querySelector('.theme-btn');
+    function updateBtn(t) { if (btn) btn.textContent = t === 'dark' ? '○ light' : '● dark'; }
+    updateBtn(document.documentElement.dataset.theme || 'dark');
+    if (btn) btn.addEventListener('click', function() {
+      const next = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
+      document.documentElement.dataset.theme = next;
+      localStorage.setItem('hairpin-theme', next);
+      updateBtn(next);
+    });
+  })();
 </script>
 </body>
 </html>
